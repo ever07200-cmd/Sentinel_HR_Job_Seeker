@@ -1,0 +1,1939 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Sentinel HR">
+<meta name="theme-color" content="#1F5F8B">
+<title>Sentinel HR — candidate dossier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Franklin:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F4F6F9; --card:#FFFFFF; --tabrest:#E7EBF1;
+  --line:#DCE2EA; --line2:#C6CFDB;
+  --ink:#16202E; --mid:#4C5A6C; --soft:#6B7787;
+  --accent:#1F5F8B; --accent-soft:#EAF1F7;
+  --b1:#1F6B49; --b2:#7A5410; --b3:#9E4718; --b4:#96282C;
+  --b1-bg:#EAF3EE; --b2-bg:#FAF3E4; --b3-bg:#FBEEE6; --b4-bg:#F9EBEB; --soft-bg:#F1F4F8; --accent-bg:#EAF1F7;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:'Libre Franklin',system-ui,sans-serif;font-size:15px;line-height:1.6;
+  padding-bottom:72px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+header.mast{background:var(--card);border-bottom:1px solid var(--line)}
+.mastin{max-width:1120px;margin:0 auto;padding:20px 24px 18px}
+.brandrow{display:flex;flex-wrap:wrap;gap:16px;align-items:baseline}
+.brand{font-size:21px;font-weight:700;letter-spacing:-.015em}
+.brand span{color:var(--accent)}
+.who{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--soft)}
+.figs{display:flex;flex-wrap:wrap;gap:28px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
+.fig{display:flex;flex-direction:column;gap:1px}
+.figl{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--soft)}
+.figv{font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600;letter-spacing:-.01em}
+.figv.key{color:var(--accent)}
+
+.tabs{display:flex;gap:3px;padding:20px 0 0 6px;flex-wrap:wrap}
+.tab{background:var(--tabrest);border:1px solid var(--line);border-bottom:none;color:var(--mid);
+  font-family:'Libre Franklin',sans-serif;font-size:13px;font-weight:500;letter-spacing:.01em;
+  padding:10px 20px;border-radius:7px 7px 0 0;cursor:pointer;margin-bottom:-1px;position:relative;width:auto}
+.tab:hover{background:#EFF2F6;color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--card);color:var(--accent);font-weight:600;z-index:2;
+  box-shadow:0 -3px 0 var(--accent) inset}
+.tab:focus-visible,button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--accent);outline-offset:2px}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:0 8px 8px 8px;
+  box-shadow:0 1px 3px rgba(22,32,46,.05)}
+.cbody{padding:26px 28px}
+@media(max-width:600px){.cbody{padding:20px 18px}}
+
+label.l{display:block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--mid);margin:0 0 6px;font-weight:500}
+input,textarea,select{width:100%;background:var(--card);border:1px solid var(--line2);color:var(--ink);
+  border-radius:5px;padding:10px 12px;font-family:'Libre Franklin',sans-serif;font-size:14.5px;line-height:1.5}
+textarea{resize:vertical}
+input:focus,textarea:focus,select:focus{border-color:var(--accent);outline:none;
+  box-shadow:0 0 0 3px var(--accent-soft)}
+input::placeholder,textarea::placeholder{color:#A6B0BE}
+.row{display:grid;gap:16px;grid-template-columns:1fr;margin-bottom:16px}
+@media(min-width:620px){.row.c2{grid-template-columns:1fr 1fr}.row.c3{grid-template-columns:1fr 1fr 1fr}}
+
+.btn{background:var(--accent);color:#fff;border:1px solid var(--accent);border-radius:5px;
+  padding:10px 20px;width:auto;font-family:'Libre Franklin',sans-serif;font-size:14px;font-weight:600;
+  cursor:pointer;line-height:1.4}
+.btn:hover{background:#1A5178;border-color:#1A5178}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:var(--card);color:var(--mid);border-color:var(--line2)}
+.btn.ghost:hover{background:#F7F9FB;color:var(--ink);border-color:var(--soft)}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:16px}
+
+.sec{margin-top:30px}
+.sech{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--soft);padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:14px;font-weight:500}
+.item{display:flex;gap:12px;padding:8px 0;line-height:1.6;align-items:flex-start}
+.tick{flex:0 0 auto;width:4px;align-self:stretch;border-radius:2px;min-height:20px}
+.note{font-size:14px;color:var(--mid)}
+.pitch{background:#F7F9FB;border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 6px 6px 0;
+  font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-size:16.5px;line-height:1.7;color:#22303F}
+.bul{font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.75;background:#F7F9FB;
+  border:1px solid var(--line);border-radius:6px;padding:14px 16px;white-space:pre-wrap}
+.letter{background:#F7F9FB;border:1px solid var(--line);border-radius:6px;padding:16px 18px;
+  white-space:pre-wrap;font-size:14.5px;line-height:1.7}
+
+.verdictbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:4px}
+.verdict{font-size:27px;font-weight:700;letter-spacing:-.02em;margin:0}
+.pill{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;padding:4px 10px;border-radius:20px;display:inline-block}
+.chip{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:4px 10px;
+  border-radius:4px;background:var(--b3-bg);color:var(--b3);margin:0 6px 6px 0}
+.caseid{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--soft);letter-spacing:.05em;
+  margin-bottom:10px}
+
+.src{display:flex;align-items:center;gap:10px;padding:11px 14px;border:1px solid var(--line);
+  border-radius:6px;margin-bottom:8px}
+.src:hover{border-color:var(--line2);background:#FCFDFE}
+.srcn{font-size:14.5px;font-weight:500}
+.srct{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--soft);background:#F1F4F8;border-radius:3px;padding:2px 7px}
+.mini{background:var(--card);border:1px solid var(--line2);color:var(--mid);border-radius:5px;width:auto;
+  font-family:'Libre Franklin',sans-serif;font-size:12.5px;padding:6px 13px;cursor:pointer;
+  text-decoration:none;display:inline-block;font-weight:500}
+.mini:hover{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+.grouplbl{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);margin:26px 0 10px;font-weight:600}
+.grouplbl:first-of-type{margin-top:14px}
+
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--soft);text-align:left;padding:12px 14px;border-bottom:2px solid var(--line);font-weight:500}
+td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr.qrow:hover{background:#FAFBFD;cursor:pointer}
+.score{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:16px}
+.empty{padding:56px 24px;text-align:center;color:var(--soft);font-size:14.5px;line-height:1.7}
+td select,td input{padding:6px 8px;font-size:13px}
+.detail{background:#FAFBFD;padding:0}
+.detailin{padding:20px 24px;border-left:3px solid var(--accent)}
+
+.flash{font-size:13px;color:var(--b1);font-weight:500}
+.err{border-left:3px solid var(--b4);background:var(--b4-bg);padding:14px 16px;font-size:14px;
+  border-radius:0 6px 6px 0;margin-top:16px}
+.info{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 18px;font-size:14px;
+  border-radius:0 6px 6px 0;margin:18px 0;line-height:1.65}
+.scanning{height:3px;background:var(--line);border-radius:2px;overflow:hidden;margin-top:18px}
+.scanning::after{content:"";display:block;height:100%;width:35%;background:var(--accent);
+  border-radius:2px;animation:sweep 1.2s ease-in-out infinite}
+@keyframes sweep{0%{transform:translateX(-100%)}100%{transform:translateX(330%)}}
+@media (prefers-reduced-motion: reduce){.scanning::after{animation:none;width:100%;opacity:.4}}
+.foot{font-size:13px;color:var(--soft);line-height:1.65;margin-top:16px}
+h3.sub{font-size:16px;font-weight:600;margin:0 0 4px}
+.cov{display:grid;grid-template-columns:1fr;gap:6px;margin:10px 0 4px}
+@media(min-width:640px){.cov{grid-template-columns:1fr 1fr}}
+.covi{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border:1px solid var(--line);
+  border-radius:5px;font-size:13.5px;line-height:1.5}
+.covi.hit{background:var(--b1-bg);border-color:#BFDCCE}
+.covi.miss{background:var(--b4-bg);border-color:#EBC9C9}
+.covm{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;flex:0 0 auto}
+.meter{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin:6px 0 2px}
+.meter span{display:block;height:100%;border-radius:4px}
+.audit{display:flex;gap:14px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line)}
+.audit:last-child{border-bottom:0}
+.abadge{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.05em;
+  padding:3px 8px;border-radius:3px;flex:0 0 auto;min-width:64px;text-align:center;margin-top:2px}
+.big{font-family:'IBM Plex Mono',monospace;font-size:38px;font-weight:600;line-height:1}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.fchip{background:var(--card);border:1px solid var(--line2);color:var(--mid);border-radius:20px;width:auto;
+  font-family:'Libre Franklin',sans-serif;font-size:12.5px;padding:6px 14px;cursor:pointer;font-weight:500}
+.fchip:hover{border-color:var(--accent);color:var(--accent)}
+.fchip.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.audrow{border:1px solid var(--line);border-radius:6px;padding:14px 16px;margin-bottom:10px;background:var(--card)}
+.audrow.on{border-color:var(--accent);background:var(--accent-soft)}
+.audname{font-size:14.5px;font-weight:600;margin-bottom:5px}
+.audtext{font-size:13.5px;line-height:1.6;color:var(--mid)}
+.qcard{border:1px solid var(--line);border-radius:8px;padding:20px 22px;background:#FCFDFE}
+.qmeta{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.qnum{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--soft);margin-left:auto}
+.qtext{font-size:17px;font-weight:600;line-height:1.45;margin:0}
+.hook{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);margin:8px 0 0;
+  letter-spacing:.02em}
+.qlist{padding:14px 0;border-bottom:1px solid var(--line)}
+.qlist:last-child{border-bottom:0}
+.sumlink{cursor:pointer;color:var(--accent);font-size:13.5px;font-weight:500}
+.soft-bg{background:#F1F4F8}
+.steps{counter-reset:s;margin:18px 0}
+/* ============ phone ============ */
+@media (max-width: 760px){
+  body{ font-size:16px; padding-bottom:40px;
+        padding-left:env(safe-area-inset-left); padding-right:env(safe-area-inset-right); }
+  .wrap{ padding:0 12px }
+  .mastin{ padding:14px 14px 12px }
+  .brand{ font-size:19px }
+  .who{ font-size:11px }
+
+  /* income strip scrolls sideways instead of wrapping into a wall */
+  .figs{ gap:20px; margin-top:12px; padding-top:12px; overflow-x:auto;
+         flex-wrap:nowrap; -webkit-overflow-scrolling:touch; scrollbar-width:none }
+  .figs::-webkit-scrollbar{ display:none }
+  .fig{ flex:0 0 auto }
+  .figv{ font-size:16px }
+
+  /* tabs become a swipeable strip, always reachable */
+  .tabs{ padding:12px 0 0 2px; flex-wrap:nowrap; overflow-x:auto;
+         -webkit-overflow-scrolling:touch; scrollbar-width:none }
+  .tabs::-webkit-scrollbar{ display:none }
+  .tab{ flex:0 0 auto; font-size:14px; padding:11px 16px }
+
+  .card{ border-radius:8px }
+  .cbody{ padding:18px 14px }
+
+  /* 16px minimum stops iOS zooming the page on focus */
+  input, textarea, select{ font-size:16px; padding:12px; border-radius:8px }
+  textarea{ min-height:120px }
+  label.l{ font-size:11px }
+  .row{ gap:14px; margin-bottom:18px }
+  .row.c2, .row.c3{ grid-template-columns:1fr }
+
+  /* thumb-sized controls */
+  .btn{ font-size:15px; padding:13px 20px; border-radius:8px; min-height:48px; flex:1 1 auto }
+  .btn.ghost{ flex:1 1 auto }
+  .mini{ font-size:13px; padding:10px 14px; min-height:40px }
+  .actions{ gap:8px }
+  .fchip{ font-size:13px; padding:9px 15px; min-height:40px }
+  .chips{ overflow-x:auto; flex-wrap:nowrap; -webkit-overflow-scrolling:touch;
+          scrollbar-width:none; padding-bottom:4px }
+  .chips::-webkit-scrollbar{ display:none }
+
+  /* practice card is the main reason to be on a phone — make it comfortable */
+  .qcard{ padding:18px 16px }
+  .qtext{ font-size:18px; line-height:1.4 }
+  .hook{ font-size:13px }
+  .pitch{ font-size:16px; padding:16px; line-height:1.65 }
+  .letter, .bul{ font-size:14px }
+  .bul{ overflow-x:auto }
+
+  .sec{ margin-top:26px }
+  .item{ font-size:15px }
+  .verdict{ font-size:23px }
+  .big{ font-size:30px }
+  .cov{ grid-template-columns:1fr }
+  .src{ padding:13px 14px }
+  .srcn{ font-size:15px }
+
+  /* tables scroll rather than crush */
+  table{ font-size:14px; min-width:620px }
+  th, td{ padding:11px 10px }
+  .foot{ font-size:13px }
+  .info, .err{ font-size:14px; padding:14px }
+}
+
+@media (max-width: 400px){
+  .tab{ padding:11px 13px; font-size:13.5px }
+  .cbody{ padding:16px 12px }
+  .verdict{ font-size:21px }
+}
+
+/* installed to the home screen: no browser chrome, so add breathing room up top */
+@media (display-mode: standalone){
+  header.mast{ padding-top:env(safe-area-inset-top) }
+}
+.stepi{display:flex;gap:14px;padding:10px 0;align-items:flex-start}
+.stepn{flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;display:flex;
+  align-items:center;justify-content:center;margin-top:2px}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="mastin">
+    <div class="brandrow">
+      <div class="brand">Sentinel <span>HR</span></div>
+      <div class="who" id="opline"></div>
+    </div>
+    <div class="figs" id="floor"></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <div class="card"><div class="cbody" id="view"></div></div>
+</div>
+
+<script>
+const KEY = "sentinelhr.v1";
+
+const DEFAULTS = {
+  activeProfile: "A",
+  profiles: {
+    A: {
+      name: "John Everson Ramos",
+      title: "Advanced Service Lead — Vulnerability Management",
+      years: "15",
+      skills: "Vulnerability management, patch management, patch governance, remediation SLAs, GRC, security coordination, Tanium, ISO 27001, NIST CSF/800-53, stakeholder reporting, risk ticketing, EOL/EOS inventory, Azure + AWS + on-prem patch compliance",
+      wins: "",
+      booleans: '("vulnerability management" OR "patch management" OR "patch governance" OR "vulnerability remediation") AND (Tanium OR Qualys OR Rapid7 OR Nessus OR "Defender for Endpoint")',
+      notes: "Philippines-based. Wants fully remote, any time zone; hybrid acceptable. Targets US/EU/AU employers, MSPs and staffing intermediaries serving US clients, and Global Capability Centres with PH presence.",
+      floorNet: 76000, applyThreshold: 65,
+      setup: "Fully remote strongly preferred. Metro Manila hybrid acceptable only for a strong-fit role.",
+      resume: ""
+    },
+    B: { name: "Operator B", title: "", years: "", skills: "", wins: "", booleans: "",
+         notes: "Philippines-based. Fill this in for a second job seeker.",
+         floorNet: 45000, applyThreshold: 60,
+         setup: "Fully remote strongly preferred. Metro Manila hybrid acceptable only for a strong-fit role.",
+         resume: "" }
+  },
+  taxUplift: 1.26, fx: 57,
+  mode: "paste", apiKey: "", model: "claude-sonnet-5", queue: []
+};
+
+let S = load(), tab = "profile", result = null, busy = false, error = "", flash = "", openRow = null;
+let draft = { co:"", ro:"", jd:"", reply:"" };
+function setDraft(f,v){ draft[f] = v; }
+
+function load(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return structuredClone(DEFAULTS);
+    const got = JSON.parse(raw);
+    const merged = {...structuredClone(DEFAULTS), ...got,
+      profiles:{...DEFAULTS.profiles, ...(got.profiles||{})}};
+    for(const k of ["A","B"]) merged.profiles[k] = {...DEFAULTS.profiles[k], ...(merged.profiles[k]||{})};
+    if(got.floorNet != null){
+      for(const k of ["A","B"]) if(got.profiles?.[k]?.floorNet == null) merged.profiles[k].floorNet = got.floorNet;
+      delete merged.floorNet;
+    }
+    (merged.queue||[]).forEach(it=>{
+      if(it && it.interview && !it.interviews){
+        it.interviews = {}; it.interviews[it.interview._audience || "auto"] = it.interview;
+        delete it.interview;
+      }
+    });
+    if(got.applyThreshold != null){
+      for(const k of ["A","B"]) if(got.profiles?.[k]?.applyThreshold == null) merged.profiles[k].applyThreshold = got.applyThreshold;
+      delete merged.applyThreshold;
+    }
+    return merged;
+  }catch{ return structuredClone(DEFAULTS); }
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){ console.error(e); } }
+
+const BANDS = [
+  {min:80,key:"b1",label:"Strong match",note:"Apply today. Tailor and send."},
+  {min:65,key:"b2",label:"Worth applying",note:"Apply, but close the gaps in your cover note."},
+  {min:45,key:"b3",label:"Stretch",note:"Only if the pipeline is thin this week."},
+  {min:0, key:"b4",label:"Skip",note:"Not worth the hour. Move on."}
+];
+const bandOf = s => BANDS.find(b => s >= b.min) || BANDS[3];
+const peso = n => "\u20B1" + Math.round(Number(n)||0).toLocaleString("en-PH");
+const esc = s => String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const profile = () => S.profiles[S.activeProfile] || S.profiles.A;
+const floorNet = () => Number(profile().floorNet) || 0;
+const applyLine = () => Number(profile().applyThreshold) || 65;
+const grossFloor = () => Math.round(floorNet() * S.taxUplift);
+const usdFloor = () => Math.round(grossFloor() / (S.fx || 57));
+
+function copy(text, tag){
+  navigator.clipboard?.writeText(text);
+  flash = tag || "Copied"; render();
+  setTimeout(()=>{ flash=""; render(); }, 2000);
+}
+
+const SOURCES = [
+  ["Philippines boards","JobStreet PH","prefilled",q=>`https://ph.jobstreet.com/jobs?keywords=${q}`],
+  ["Philippines boards","Indeed PH","prefilled",q=>`https://ph.indeed.com/jobs?q=${q}&l=Remote`],
+  ["Philippines boards","LinkedIn — remote, PH","prefilled",q=>`https://www.linkedin.com/jobs/search/?keywords=${q}&location=Philippines&f_WT=2`],
+  ["Philippines boards","Kalibrr","paste",()=>`https://www.kalibrr.com/job-board`],
+  ["Philippines boards","foundit PH","prefilled",q=>`https://www.foundit.com.ph/srp/results?query=${q}`],
+  ["Philippines boards","Bossjob","paste",()=>`https://bossjob.ph/jobs`],
+  ["Philippines boards","OnlineJobs.ph","prefilled",q=>`https://www.onlinejobs.ph/jobseekers/jobsearch?jobkeyword=${q}`],
+  ["Global remote","Google Jobs","prefilled",q=>`https://www.google.com/search?q=${q}+remote+philippines&ibp=htl;jobs`],
+  ["Global remote","We Work Remotely","prefilled",q=>`https://weworkremotely.com/remote-jobs/search?term=${q}`],
+  ["Global remote","Remotive","prefilled",q=>`https://remotive.com/remote-jobs/search?search=${q}`],
+  ["Global remote","Himalayas","prefilled",q=>`https://himalayas.app/jobs?search=${q}`],
+  ["Global remote","RemoteOK","prefilled",q=>`https://remoteok.com/?tags=${q}`],
+  ["Global remote","Wellfound","paste",()=>`https://wellfound.com/jobs`],
+  ["Global remote","Jobgether","paste",()=>`https://jobgether.com/`],
+  ["Global remote","Working Nomads","prefilled",q=>`https://www.workingnomads.com/jobs?search=${q}`],
+  ["Overlooked","HN Who is hiring","paste",()=>`https://news.ycombinator.com/submitted?id=whoishiring`],
+  ["Overlooked","Asian Development Bank","paste",()=>`https://www.adb.org/work-with-us/careers`],
+  ["Overlooked","Y Combinator startups","paste",()=>`https://www.workatastartup.com/jobs`],
+  ["PH to US placement","Support Shepherd","paste",()=>`https://supportshepherd.com/`],
+  ["PH to US placement","Somewhere","paste",()=>`https://www.somewhere.com/`],
+  ["PH to US placement","Penbrothers","paste",()=>`https://www.penbrothers.com/`],
+  ["PH to US placement","Virtual Coworker","paste",()=>`https://www.virtualcoworker.com.ph/`],
+  ["Hires globally by design","Deel job board","paste",()=>`https://www.deel.com/`],
+  ["Hires globally by design","Oyster","paste",()=>`https://www.oysterhr.com/`],
+  ["Hires globally by design","Remote.com","paste",()=>`https://remote.com/`],
+  ["Hires globally by design","Canonical careers","paste",()=>`https://canonical.com/careers`],
+  ["Hires globally by design","GitLab careers","paste",()=>`https://about.gitlab.com/jobs/`],
+  ["Hires globally by design","Toptal","paste",()=>`https://www.toptal.com/talent`]
+];
+
+const REVIEW = [
+  ["Glassdoor reviews", c=>`https://www.google.com/search?q=site:glassdoor.com+${c}+reviews`],
+  ["Indeed reviews",    c=>`https://www.google.com/search?q=site:indeed.com+${c}+reviews`],
+  ["Reddit and Blind",  c=>`https://www.google.com/search?q=${c}+%22work+culture%22+reddit+OR+teamblind`],
+  ["Layoffs and news",  c=>`https://www.google.com/search?q=${c}+layoffs+OR+restructuring`]
+];
+
+function gauge(score, threshold){
+  const W=680, H=64, x=v=>(v/100)*W, tx=x(threshold);
+  const segs=[[0,45,"var(--b4)"],[45,65,"var(--b3)"],[65,80,"var(--b2)"],[80,100,"var(--b1)"]];
+  const labels=[[22,"Skip"],[55,"Stretch"],[72,"Apply"],[90,"Strong"]];
+  return `<svg viewBox="0 -10 ${W} ${H}" width="100%" style="margin:18px 0 8px;display:block" role="img"
+    aria-label="Fit score ${score} of 100, apply threshold ${threshold}">
+    ${segs.map(([a,b,c])=>`<rect x="${x(a)}" y="20" width="${x(b)-x(a)-2}" height="10" rx="2"
+      fill="${c}" opacity="${score>=a?0.85:0.18}"/>`).join("")}
+    ${labels.map(([p,t])=>`<text x="${x(p)}" y="45" fill="var(--soft)" font-size="10.5"
+      font-family="IBM Plex Mono, monospace" text-anchor="middle" letter-spacing="0.06em">${t}</text>`).join("")}
+    <line x1="${tx}" y1="14" x2="${tx}" y2="36" stroke="var(--ink)" stroke-width="1.5"/>
+    <g transform="translate(${x(score)},0)">
+      <polygon points="0,17 -5,7 5,7" fill="var(--ink)"/>
+      <text x="0" y="5" fill="var(--ink)" font-size="13" font-weight="600" text-anchor="middle"
+        font-family="IBM Plex Mono, monospace">${score}</text>
+    </g></svg>`;
+}
+
+/* ---------- the prompt, shared by both modes ---------- */
+function buildPrompt(company, role, jd){
+  const p = profile();
+  return `You are screening a job posting for a specific candidate. Be blunt and specific. No flattery.
+
+CANDIDATE
+Name: ${p.name}
+Current title: ${p.title}
+Years of experience: ${p.years}
+Skills: ${p.skills}
+Notable results: ${p.wins || "not supplied"}
+Context: ${p.notes}
+Work setup preference: ${p.setup || "fully remote"}
+
+CRITICAL: This candidate lives in the Philippines and has no US, EU, UK or Australian work
+authorization. A role is only viable if the employer can lawfully engage someone based in the
+Philippines — as a direct hire, through an Employer of Record, or as an independent contractor.
+Any posting that requires work authorization elsewhere, a security clearance, or physical presence
+in another country is not viable no matter how well the skills match. Rule on this first.
+
+PAY REQUIREMENT
+Needs to take home ${peso(floorNet())} per month after tax and mandatory contributions.
+That is roughly ${peso(grossFloor())} gross monthly, or about USD ${usdFloor()}/month on a foreign contract.
+
+POSTING
+Company: ${company || "not given"}
+Role: ${role || "see description"}
+Description:
+"""
+${jd.slice(0,7000)}
+"""
+
+Return ONLY a JSON object. No markdown, no backticks, no preamble.
+{
+ "eligible": "<yes|no|unclear — can someone based in the Philippines lawfully hold this job>",
+ "eligibility_note": "<one sentence. Quote the posting's own wording on location or authorization if it has any. If silent, say so and say what to ask.>",
+ "work_setup": "<Remote worldwide | Remote, region-restricted | Hybrid | Onsite | Not stated — then one clause on how that sits against his stated preference>",
+ "fit_score": <0-100 integer. If eligible is \"no\", cap this at 20 regardless of skills match.>,
+ "verdict": "<max 9 words>",
+ "salary_read": "<what pay is stated or implied and whether it clears the requirement. Say plainly if not stated.>",
+ "salary_clears": "<yes|no|unknown>",
+ "seniority_read": "<is this level above, at, or below his current level, and what that means for him. One sentence.>",
+ "match": ["<max 4: their requirement -> his concrete evidence>"],
+ "gaps": ["<max 4: requirement he lacks -> how to handle it in one clause>"],
+ "ats_keywords": ["<max 8 exact terms from the posting that should appear in his resume for this application>"],
+ "culture": ["<max 4: a phrase from the posting -> what it signals about how they work>"],
+ "culture_rating": "<one of: Well documented | Mixed signals | Thin, verify externally>",
+ "flags": ["<max 3 risks, empty array if none>"],
+ "pros": ["<max 3>"],
+ "cons": ["<max 3>"],
+ "pitch": "<3 sentences, first person, what he would fix for them in the first 90 days>",
+ "bullets": ["<max 3 resume bullets rewritten for this posting, each containing a number>"],
+ "cover_letter": "<a short cover note, 150 words max, first person, specific to this posting, no cliches>",
+ "interview_qs": ["<max 4 questions they are likely to ask, each followed by ' -> ' and the angle he should take>"],
+ "ask_them": ["<max 3 questions he should ask them, chosen to surface real risk>"],
+ "verify": ["<max 3 things to check about this employer before applying>"]
+}`;
+}
+
+/* ==========================================================
+   resume engine — runs locally, costs nothing
+   ========================================================== */
+const FILLER = ["responsible for","duties included","team player","hard worker","results-driven",
+  "detail-oriented","go-getter","think outside the box","proven track record","dynamic professional",
+  "self-starter","excellent communication skills","works well under pressure"];
+const WEAK = ["helped","assisted with","worked on","participated in","involved in","tasked with"];
+const SECTIONS = [
+  ["summary", /(professional\s+)?(summary|profile|objective)/i],
+  ["experience", /(work\s+)?(experience|employment|history)/i],
+  ["skills", /(technical\s+)?(skills|competencies|tools|technologies)/i],
+  ["education", /education|academic/i],
+  ["certs", /certification|licen[cs]e|credential/i]
+];
+
+function resumeStats(txt){
+  const lines = txt.split(/\n/).map(l=>l.trim());
+  const words = txt.split(/\s+/).filter(Boolean);
+  const bullets = lines.filter(l=>/^[-•*\u2013\u2022]/.test(l) && l.length>12);
+  const quantified = bullets.filter(b=>/\d/.test(b));
+  const longBullets = bullets.filter(b=>b.split(/\s+/).length>35);
+  const weakStart = bullets.filter(b=>WEAK.some(w=>b.toLowerCase().replace(/^[-•*\u2013\u2022]\s*/,"").startsWith(w)));
+  const found = {};
+  for(const [k,re] of SECTIONS) found[k] = lines.some(l=>l.length<60 && re.test(l));
+  const fillers = FILLER.filter(f=>txt.toLowerCase().includes(f));
+  const pronouns = (txt.match(/\b(I|my|me)\b/g)||[]).length;
+  const email = /[\w.+-]+@[\w-]+\.[\w.]+/.test(txt);
+  const dates = (txt.match(/\b(19|20)\d{2}\b/g)||[]).length;
+  return {words:words.length, bullets:bullets.length, quantified:quantified.length,
+    longBullets:longBullets.length, weakStart:weakStart.length, found, fillers, pronouns, email, dates};
+}
+
+function auditResume(txt){
+  if(!txt || txt.trim().length < 200) return null;
+  const st = resumeStats(txt);
+  const out = [];
+  const add = (level,title,detail) => out.push({level,title,detail});
+  const qPct = st.bullets ? Math.round(st.quantified/st.bullets*100) : 0;
+
+  if(st.words < 350) add("fix","Too short",`About ${st.words} words. A fifteen-year career needs 500 to 900 to carry enough keywords and evidence.`);
+  else if(st.words > 1100) add("fix","Too long",`About ${st.words} words. Cut older roles to two lines each and get under 900.`);
+  else add("ok","Length is right",`${st.words} words sits in the range recruiters and parsers both handle well.`);
+
+  for(const [k,label] of [["summary","Summary"],["experience","Experience"],["skills","Skills"],["education","Education"]]){
+    if(!st.found[k]) add("fix",`No ${label} heading found`,`Parsers look for a plain heading on its own line. Add one that literally reads ${label}.`);
+  }
+  if(!st.found.certs) add("warn","No certifications heading","If you hold any, give them their own heading. If you hold none, ignore this.");
+
+  if(st.bullets < 8) add("fix","Too few bullet points",`Found ${st.bullets}. Aim for three to six per recent role, written as achievements.`);
+  else add("ok","Bullet count is healthy",`${st.bullets} bullets found.`);
+
+  if(qPct < 40) add("fix","Not enough numbers",`Only ${qPct}% of your bullets contain a figure. Target half or more — counts, percentages, timeframes, estate sizes.`);
+  else if(qPct < 60) add("warn","Numbers could go further",`${qPct}% of bullets are quantified. Push toward 60%.`);
+  else add("ok","Well quantified",`${qPct}% of bullets carry a figure.`);
+
+  if(st.longBullets) add("warn","Some bullets run long",`${st.longBullets} bullet${st.longBullets>1?"s":""} over 35 words. Split or trim them.`);
+  if(st.weakStart) add("warn","Weak opening verbs",`${st.weakStart} bullet${st.weakStart>1?"s":""} start with words like "helped" or "worked on". Start with what you did: reduced, led, built, cut, coordinated.`);
+  if(st.fillers.length) add("fix","Filler phrases present",`Remove: ${st.fillers.join(", ")}. These take space and say nothing.`);
+  if(st.pronouns > 2) add("warn","First-person pronouns",`Found ${st.pronouns}. Resume bullets drop "I" and "my" by convention.`);
+  if(!st.email) add("fix","No email address found","Include a professional email. Leave out your full home address — city and country is enough.");
+  if(st.dates < 4) add("warn","Few dates found","Every role needs a start and end date. Gaps in dates get flagged by screening software.");
+
+  const fixes = out.filter(o=>o.level==="fix").length, warns = out.filter(o=>o.level==="warn").length;
+  const score = Math.max(0, Math.min(100, 100 - fixes*11 - warns*4));
+  return {items:out, score, st, qPct};
+}
+
+/* keyword coverage against a specific posting */
+function coverage(resume, terms){
+  const hay = " " + resume.toLowerCase().replace(/[^a-z0-9&+#.\s-]/g," ").replace(/\s+/g," ") + " ";
+  return terms.map(t=>{
+    const term = String(t).trim();
+    const low = term.toLowerCase();
+    let hit = hay.includes(" "+low+" ") || hay.includes(low);
+    if(!hit){
+      const parts = low.split(/[\s\-\/]+/).filter(w=>w.length>3);
+      hit = parts.length>1 && parts.every(w=>hay.includes(w));
+    }
+    return {term, hit};
+  });
+}
+
+function jobTerms(item){
+  const a = item?.assessment || {};
+  const extra = (document.getElementById("extraKw")?.value || "")
+    .split(/[,\n]/).map(x=>x.trim()).filter(Boolean);
+  return [...new Set([...(a.ats_keywords||[]), ...extra])];
+}
+
+/* the tailoring + prep prompt */
+function buildResumePrompt(item){
+  const p = profile();
+  const cov = coverage(p.resume||"", jobTerms(item));
+  const missing = cov.filter(c=>!c.hit).map(c=>c.term);
+  return `You are helping a candidate tailor an existing resume to one specific job posting, and prepare for its interview. Be blunt. Do not invent experience the resume does not support.
+
+CANDIDATE CONTEXT
+Name: ${p.name}
+Current title: ${p.title}
+Years: ${p.years}
+Work setup: ${p.setup||"remote"}
+Location: Philippines, no foreign work authorization.
+
+CURRENT RESUME
+"""
+${(p.resume||"").slice(0,7000)}
+"""
+
+TARGET POSTING
+Company: ${item.company}
+Role: ${item.role}
+${item.jd ? 'Description:\n"""\n' + item.jd.slice(0,5000) + '\n"""' : "Description not stored for this queue entry. Work from the role title and the keywords below, and say in your reply that a fuller posting would give a better result."}
+
+KEYWORDS FROM THIS POSTING THAT ARE MISSING FROM THE RESUME
+${missing.length ? missing.join(", ") : "none — coverage is complete"}
+
+Return ONLY a JSON object. No markdown, no backticks, no preamble.
+{
+ "summary": "<a rewritten professional summary for this specific posting, 40-70 words, third person voice with no pronouns, front-loading the posting's own language where the resume genuinely supports it>",
+ "bullets": ["<6 to 8 rewritten resume bullets, strongest first, each starting with a strong verb and each containing a number. Use figures already in the resume. Where a number is genuinely needed but absent, write [X] so the candidate fills it in.>"],
+ "skills_line": "<a single reordered skills line for this application, most relevant first, including every posting keyword the resume can honestly support>",
+ "honest_gaps": ["<max 4: a keyword he cannot honestly claim -> what to write instead, or advice to leave it out>"],
+ "ats_fixes": ["<max 5 concrete formatting or wording changes for screening software, specific to this resume>"],
+ "study_plan": [
+   "<max 5 items. Each: the skill gap -> the single most efficient way to close it -> a realistic timeframe. Order by what most affects this application. Be specific about resources: name the actual framework, doc, lab or cert, not 'take a course'.>"
+ ],
+ "quick_wins": ["<max 3 things he can learn or do in under a week that would materially improve this application>"],
+ "technical_qs": ["<5 likely technical questions, each followed by ' -> ' and a two-sentence outline of a strong answer drawn from this candidate's actual background>"],
+ "behavioral_qs": ["<4 likely behavioral questions, each followed by ' -> ' and the STAR angle to take, naming which real experience from the resume to use>"],
+ "ask_them": ["<max 3 questions for him to ask that surface real risk about this employer or role>"]
+}`;
+}
+
+/* ---------- API mode ---------- */
+async function runScan(){
+  const jd = (draft.jd||"").trim();
+  const company = (draft.co||"").trim();
+  const role = (draft.ro||"").trim();
+  if(jd.length < 80){ error="Paste the full job description — at least a few sentences of it."; render(); return; }
+  if(!S.apiKey){ error="No API key saved. Switch to paste mode on the Settings tab, or add a key there."; render(); return; }
+
+  busy=true; error=""; result=null; render();
+  try{
+    const r = await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",
+      headers:{"content-type":"application/json","x-api-key":S.apiKey,
+        "anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
+      body:JSON.stringify({model:S.model, max_tokens:2600,
+        messages:[{role:"user",content:buildPrompt(company,role,jd)}]})
+    });
+    const data = await r.json();
+    if(data.error) throw new Error(data.error.message || "the API rejected the request");
+    let txt = (data.content||[]).filter(c=>c.type==="text").map(c=>c.text).join("");
+    result = parseResult(txt, company, role);
+  }catch(e){
+    console.error(e);
+    error = "The scan didn't complete: " + e.message;
+  }finally{ busy=false; render(); }
+}
+
+function parseResult(txt, company, role){
+  txt = txt.replace(/```json/g,"").replace(/```/g,"").trim();
+  const o = JSON.parse(txt.slice(txt.indexOf("{"), txt.lastIndexOf("}")+1));
+  o._company = company; o._role = role;
+  return o;
+}
+
+/* ---------- paste mode ---------- */
+function copyPrompt(){
+  const jd = (draft.jd||"").trim();
+  const company = (draft.co||"").trim();
+  const role = (draft.ro||"").trim();
+  if(jd.length < 80){ error="Paste the full job description first."; render(); return; }
+  if(!company){ error="Enter the company name first — it labels the row in your queue."; render(); return; }
+  error=""; copy(buildPrompt(company,role,jd), "Prompt copied — paste it into a chat with Claude");
+}
+
+function renderPasted(){
+  const txt = (draft.reply||"").trim();
+  const company = (draft.co||"").trim();
+  const role = (draft.ro||"").trim();
+  if(!txt){ error="Paste Claude's reply into the box first."; render(); return; }
+  try{
+    result = parseResult(txt, company, role); error="";
+  }catch(e){
+    error = "That didn't parse. Copy Claude's whole reply, including the opening and closing braces.";
+  }
+  render();
+}
+
+function clearScan(){ draft = {co:"",ro:"",jd:"",reply:""}; result=null; error=""; render(); }
+
+function addToQueue(){
+  S.queue.unshift({
+    jd: (draft.jd||"").trim().slice(0,9000),
+    id:Date.now(), company:(result._company||draft.co||"").trim()||"Unnamed",
+    role:(result._role||draft.ro||"").trim(),
+    score:result.fit_score, clears:result.salary_clears, status:"To apply",
+    added:new Date().toISOString().slice(0,10), next:"", assessment:result
+  });
+  save(); flash="Added to your queue"; render();
+  setTimeout(()=>{flash=""; render();},2000);
+}
+
+/* ---------- assessment renderer, shared by Scan and Queue ---------- */
+function renderAssessment(r, opts={}){
+  const b = bandOf(r.fit_score);
+  const co = encodeURIComponent(r._company || "");
+  const list = (title, arr, colour) => (arr && arr.length) ? `
+    <div class="sec"><div class="sech">${title}</div>
+    ${arr.map(i=>`<div class="item"><span class="tick" style="background:var(--${colour})"></span><span>${esc(i)}</span></div>`).join("")}
+    </div>` : "";
+
+  return `
+    ${opts.compact?"":`<div class="caseid">${esc((r._company||"Unnamed").toUpperCase())} · ASSESSED ${new Date().toISOString().slice(0,10)}</div>
+    <div class="verdictbar">
+      <h2 class="verdict">${esc(b.label)}</h2>
+      <span class="pill" style="color:var(--${b.key});background:var(--${b.key}-bg)">${r.fit_score} / 100</span>
+    </div>
+    <p class="note" style="margin-top:0">${esc(r.verdict)}. ${esc(b.note)}</p>
+    ${gauge(Math.max(0,Math.min(100,r.fit_score)), applyLine())}`}
+
+    ${r.eligible?`<div class="sec"><div class="sech">Can you actually hold this job from the Philippines</div>
+      <div class="item"><span class="tick" style="background:var(--${r.eligible==="yes"?"b1":r.eligible==="no"?"b4":"b2"})"></span>
+        <span><strong>${esc(r.eligible==="yes"?"Yes":r.eligible==="no"?"No — do not apply":"Unclear — ask before investing time")}.</strong> ${esc(r.eligibility_note||"")}</span></div>
+      ${r.work_setup?`<div class="item"><span class="tick" style="background:var(--line2)"></span><span>${esc(r.work_setup)}</span></div>`:""}
+    </div>`:""}
+
+    <div class="sec"><div class="sech">Pay, against your ${peso(floorNet())} take-home floor</div>
+      <div class="item"><span class="tick" style="background:var(--${r.salary_clears==="yes"?"b1":r.salary_clears==="no"?"b4":"b2"})"></span>
+      <span>${esc(r.salary_read)}</span></div>
+      ${r.seniority_read?`<div class="item"><span class="tick" style="background:var(--line2)"></span><span>${esc(r.seniority_read)}</span></div>`:""}
+    </div>
+
+    ${list("Where you match", r.match, "b1")}
+    ${list("Gaps", r.gaps, "b3")}
+
+    ${(r.ats_keywords||[]).length?`<div class="sec">
+      <div class="sech">Put these exact words in your resume for this application</div>
+      <p class="note" style="margin-top:0;margin-bottom:12px">Screening software matches literal strings. If a
+      term below isn't on your resume in these words, the filter may never pass you to a human.</p>
+      <div>${r.ats_keywords.map(k=>`<span class="chip">${esc(k)}</span>`).join("")}</div>
+      <div class="actions"><button class="btn ghost" onclick='copy(${JSON.stringify((r.ats_keywords||[]).join(", "))},"Keywords copied")'>Copy keywords</button></div>
+    </div>`:""}
+
+    <div class="sec"><div class="sech">Culture signals${r.culture_rating?` — ${esc(r.culture_rating)}`:""}</div>
+      ${(r.culture||[]).map(i=>`<div class="item"><span class="tick" style="background:var(--b2)"></span><span>${esc(i)}</span></div>`).join("")}
+    </div>
+
+    ${list("Red flags", r.flags, "b4")}
+
+    <div class="sec"><div class="sech">Pros and cons</div>
+      ${(r.pros||[]).map(x=>`<div class="item"><span class="tick" style="background:var(--b1)"></span><span>${esc(x)}</span></div>`).join("")}
+      ${(r.cons||[]).map(x=>`<div class="item"><span class="tick" style="background:var(--b4)"></span><span>${esc(x)}</span></div>`).join("")}
+    </div>
+
+    <div class="sec"><div class="sech">Your contribution pitch</div>
+      <div class="pitch">${esc(r.pitch)}</div></div>
+
+    ${(r.bullets||[]).length?`<div class="sec"><div class="sech">Resume bullets for this posting</div>
+      <div class="bul">${esc(r.bullets.map(x=>"• "+x).join("\n"))}</div>
+      <div class="actions"><button class="btn ghost" onclick='copy(${JSON.stringify((r.bullets||[]).map(x=>"• "+x).join("\n"))},"Bullets copied")'>Copy bullets</button></div>
+    </div>`:""}
+
+    ${r.cover_letter?`<div class="sec"><div class="sech">Cover note draft</div>
+      <div class="letter">${esc(r.cover_letter)}</div>
+      <div class="actions"><button class="btn ghost" onclick='copy(${JSON.stringify(r.cover_letter)},"Cover note copied")'>Copy cover note</button></div>
+    </div>`:""}
+
+    ${(r.interview_qs||[]).length?`<div class="sec"><div class="sech">Likely interview questions, and your angle</div>
+      ${r.interview_qs.map(q=>`<div class="item"><span class="tick" style="background:var(--accent)"></span><span>${esc(q)}</span></div>`).join("")}
+    </div>`:""}
+
+    ${(r.ask_them||[]).length?`<div class="sec"><div class="sech">Ask them this</div>
+      ${r.ask_them.map(q=>`<div class="item"><span class="tick" style="background:var(--accent)"></span><span>${esc(q)}</span></div>`).join("")}
+    </div>`:""}
+
+    <div class="sec"><div class="sech">Check the employer yourself</div>
+      <p class="note" style="margin-top:0;margin-bottom:14px">The culture read above comes only from the
+      posting's own wording. Ratings and reviews live on sites this tool can't read for you.</p>
+      ${(r.verify||[]).map(v=>`<div class="item"><span class="tick" style="background:var(--line2)"></span><span>${esc(v)}</span></div>`).join("")}
+      <div class="actions">${REVIEW.map(([n,f])=>`<a class="mini" href="${f(co)}" target="_blank" rel="noopener">${n}</a>`).join("")}</div>
+    </div>`;
+}
+
+/* ---------- views ---------- */
+function viewScan(){
+  const isPaste = S.mode === "paste";
+  return `
+    <h3 class="sub">Assess a posting</h3>
+    <p class="note" style="margin-top:0;margin-bottom:20px">Scored against your profile and your income floor.</p>
+
+    ${isPaste?`<div class="info"><strong>Free mode.</strong> The app writes the prompt, you paste it into a
+    chat with Claude, then paste the reply back here. No API key, no cost. Switch to automatic on the
+    Settings tab if you'd rather add credit.</div>`:""}
+
+    <div class="row c2">
+      <div><label class="l" for="co">Company</label><input id="co" placeholder="Acme Corporation"
+        value="${esc(draft.co)}" oninput="setDraft('co',this.value)"></div>
+      <div><label class="l" for="ro">Role title</label><input id="ro" placeholder="Vulnerability Management Lead"
+        value="${esc(draft.ro)}" oninput="setDraft('ro',this.value)"></div>
+    </div>
+    <div class="row">
+      <div><label class="l" for="jd">Job description</label>
+      <textarea id="jd" rows="8" placeholder="Paste the whole posting here, including requirements and any salary range."
+        oninput="setDraft('jd',this.value)">${esc(draft.jd)}</textarea></div>
+    </div>
+
+    ${isPaste?`
+      <div class="steps">
+        <div class="stepi"><span class="stepn">1</span><span>Click <strong>Copy prompt</strong> below.</span></div>
+        <div class="stepi"><span class="stepn">2</span><span>Open <strong>claude.ai</strong>, start a new chat, paste, and send.</span></div>
+        <div class="stepi"><span class="stepn">3</span><span>Copy Claude's whole reply and paste it into the box below.</span></div>
+        <div class="stepi"><span class="stepn">4</span><span>Click <strong>Show assessment</strong>.</span></div>
+      </div>
+      <div class="actions" style="margin-top:0">
+        <button class="btn" onclick="copyPrompt()">Copy prompt</button>
+        <a class="mini" href="https://claude.ai/new" target="_blank" rel="noopener">Open claude.ai</a>
+        ${flash?`<span class="flash">${esc(flash)}</span>`:""}
+      </div>
+      <div class="row" style="margin-top:20px">
+        <div><label class="l" for="reply">Claude's reply</label>
+        <textarea id="reply" rows="5" placeholder="Paste the whole reply here, starting with { and ending with }"
+          oninput="setDraft('reply',this.value)">${esc(draft.reply)}</textarea></div>
+      </div>
+      <div class="actions" style="margin-top:0">
+        <button class="btn" onclick="renderPasted()">Show assessment</button>
+        <button class="btn ghost" onclick="clearScan()">Clear</button>
+      </div>`
+    :`
+      <div class="actions">
+        <button class="btn" onclick="runScan()" ${busy?"disabled":""}>${busy?"Assessing…":"Assess this role"}</button>
+        <button class="btn ghost" onclick="clearScan()">Clear</button>
+        ${flash?`<span class="flash">${esc(flash)}</span>`:""}
+      </div>
+      ${busy?`<div class="scanning"></div>`:""}`}
+
+    ${error?`<div class="err">${esc(error)}</div>`:""}
+    ${!result?"":`<div style="margin-top:34px;padding-top:28px;border-top:2px solid var(--line)">
+      ${renderAssessment(result)}
+      <div class="actions" style="margin-top:30px">
+        <button class="btn" onclick="addToQueue()">Add to queue</button>
+      </div></div>`}`;
+}
+
+/* ==========================================================
+   document builder — assembles an ATS-safe resume and exports it
+   ========================================================== */
+
+/* split a pasted master resume into its sections */
+function splitSections(txt){
+  const lines = (txt||"").split(/\n/);
+  const out = { header:[], summary:[], skills:[], experience:[], certs:[], education:[] };
+  let cur = "header";
+  for(const raw of lines){
+    const l = raw.trim();
+    if(l && l.length < 60){
+      const hit = SECTIONS.find(([k,re]) => re.test(l) && l.split(/\s+/).length <= 4);
+      if(hit){ cur = hit[0]; continue; }
+    }
+    out[cur].push(raw);
+  }
+  const clean = a => a.join("\n").replace(/\n{3,}/g,"\n\n").trim();
+  return { header:clean(out.header), summary:clean(out.summary), skills:clean(out.skills),
+           experience:clean(out.experience), certs:clean(out.certs), education:clean(out.education) };
+}
+
+/* turn free-text experience into the builder's markup */
+const MONTHS = "(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*";
+const DATERANGE = new RegExp("((?:" + MONTHS + "\\s+)?(?:19|20)\\d{2}\\s*[\\u2013-]\\s*(?:(?:" + MONTHS + "\\s+)?(?:19|20)\\d{2}|Present|Current))\\s*$", "i");
+
+function markExperience(txt){
+  const out = [];
+  let pendingDate = null;
+  const flush = () => { if(pendingDate){ out.push(pendingDate); pendingDate = null; } };
+
+  (txt||"").split(/\n/).forEach(raw=>{
+    const l = raw.trim();
+    if(!l){ flush(); out.push(""); return; }
+
+    if(/^[-•*\u2013\u2022]/.test(l)){
+      flush();
+      out.push("- " + l.replace(/^[-•*\u2013\u2022]\s*/,""));
+      return;
+    }
+
+    const m = l.match(DATERANGE);
+    if(m){
+      flush();
+      const title = l.slice(0, m.index).replace(/[\s,|\u2013-]+$/,"").trim();
+      if(title){ out.push("# " + title); pendingDate = m[1].trim(); }
+      else out.push(m[1].trim());
+      return;
+    }
+
+    // the line straight after a dated title is the employer: plain, then the dates
+    if(pendingDate){ out.push(l); flush(); return; }
+
+    if(/^[A-Z][^.]{4,70}$/.test(l)){ out.push("# " + l); return; }
+    out.push(l);
+  });
+  flush();
+  return out.join("\n");
+}
+
+function assembleResume(p, prep){
+  const sec = splitSections(p.resume||"");
+  const contact = (sec.header||"").split(/\n/).map(x=>x.trim()).filter(Boolean);
+  const name = contact.shift() || p.name || "";
+  const lines = [];
+  lines.push(name);
+  contact.slice(0,4).forEach(c=>{
+    c.split(/\s*[|·]\s*/).filter(Boolean).forEach(part=>lines.push("@ " + part.trim()));
+  });
+  lines.push("");
+  lines.push("## PROFESSIONAL SUMMARY");
+  lines.push(prep?.summary || sec.summary || "");
+  lines.push("");
+  lines.push("## SKILLS");
+  lines.push(prep?.skills_line || sec.skills || "");
+  lines.push("");
+  if(prep?.bullets?.length){
+    lines.push("## CAREER HIGHLIGHTS");
+    prep.bullets.forEach(b=>lines.push("- " + b));
+    lines.push("");
+  }
+  lines.push("## PROFESSIONAL EXPERIENCE");
+  lines.push(markExperience(sec.experience));
+  lines.push("");
+  if(sec.certs){
+    lines.push("## CERTIFICATIONS");
+    sec.certs.split(/\n/).map(x=>x.replace(/^[-•*\u2013\u2022]\s*/,"").trim()).filter(Boolean)
+      .forEach(c=>lines.push("- " + c));
+    lines.push("");
+  }
+  lines.push("## EDUCATION");
+  lines.push(sec.education || "[Add your degree, institution and year]");
+  return lines.join("\n").replace(/\n{3,}/g,"\n\n").trim();
+}
+
+/* plain text — the safest thing to paste into an online application form */
+function resumePlain(src){
+  return (src||"").split(/\n/).map(l=>{
+    const t = l.trim();
+    if(t.startsWith("## ")) return "\n" + t.slice(3).toUpperCase();
+    if(t.startsWith("# ")) return t.slice(2);
+    if(t.startsWith("@ ")) return t.slice(2);
+    if(t.startsWith("- ")) return "- " + t.slice(2);
+    return t;
+  }).join("\n").replace(/\n{3,}/g,"\n\n").trim();
+}
+
+/* Word-compatible HTML. No tables, no columns, no header or footer. */
+function resumeWordHtml(src, name){
+  const esc2 = t => String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const body = [];
+  let inList = false;
+  const closeList = () => { if(inList){ body.push("</ul>"); inList = false; } };
+  const lines = (src||"").split(/\n/);
+  lines.forEach((raw,i)=>{
+    const t = raw.trim();
+    if(!t){ closeList(); return; }
+    if(i===0){ body.push(`<p class=Name>${esc2(t)}</p>`); return; }
+    if(t.startsWith("@ ")){ closeList(); body.push(`<p class=Contact>${esc2(t.slice(2))}</p>`); return; }
+    if(t.startsWith("## ")){ closeList(); body.push(`<h1>${esc2(t.slice(3).toUpperCase())}</h1>`); return; }
+    if(t.startsWith("# ")){ closeList(); body.push(`<h2>${esc2(t.slice(2))}</h2>`); return; }
+    if(t.startsWith("- ")){ if(!inList){ body.push("<ul>"); inList = true; } body.push(`<li>${esc2(t.slice(2))}</li>`); return; }
+    closeList(); body.push(`<p>${esc2(t)}</p>`);
+  });
+  closeList();
+  return `<html xmlns:o='urn:schemas-microsoft-com:office:office'
+xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head><meta charset='utf-8'><title>${esc2(name)}</title>
+<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View></w:WordDocument></xml><![endif]-->
+<style>
+@page{margin:1.9cm 2.0cm}
+body{font-family:Calibri,Arial,sans-serif;font-size:10.5pt;line-height:1.25;color:#000}
+p.Name{font-size:17pt;font-weight:bold;margin:0 0 2pt 0}
+p.Contact{font-size:10pt;margin:0;color:#222}
+h1{font-size:11pt;font-weight:bold;text-transform:uppercase;letter-spacing:.4pt;
+   margin:14pt 0 4pt 0;border-bottom:1pt solid #000;padding-bottom:2pt}
+h2{font-size:10.5pt;font-weight:bold;margin:9pt 0 2pt 0}
+p{margin:0 0 4pt 0}
+ul{margin:2pt 0 6pt 0;padding-left:16pt}
+li{margin:0 0 3pt 0}
+</style></head><body>${body.join("\n")}</body></html>`;
+}
+
+function downloadBlob(content, filename, mime){
+  const blob = content instanceof Blob ? content : new Blob([content], {type:mime});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename; document.body.appendChild(a); a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); }, 1500);
+}
+
+function safeName(p, item, ext){
+  const who = (p.name||"Resume").replace(/[^A-Za-z0-9]+/g,"_").replace(/^_|_$/g,"");
+  const co = item ? "_" + (item.company||"").replace(/[^A-Za-z0-9]+/g,"_").replace(/^_|_$/g,"") : "";
+  return `${who}${co}_Resume.${ext}`;
+}
+
+/* true .docx via the docx library, loaded on demand. Falls back to .doc. */
+let docxLib = null;
+function loadDocx(){
+  if(docxLib) return Promise.resolve(docxLib);
+  if(window.docx){ docxLib = window.docx; return Promise.resolve(docxLib); }
+  const urls = ["https://unpkg.com/docx@8.5.0/build/index.umd.js",
+                "https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"];
+  return urls.reduce((chain,url)=>chain.catch(()=>new Promise((res,rej)=>{
+    const sc = document.createElement("script");
+    sc.src = url; sc.onload = ()=>{ if(window.docx){ docxLib = window.docx; res(docxLib); } else rej(); };
+    sc.onerror = rej; document.head.appendChild(sc);
+  })), Promise.reject());
+}
+
+async function docxBlobFromMarkup(src){
+  const d = await loadDocx();
+  {
+    const { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, BorderStyle, LevelFormat } = d;
+    const kids = [];
+    let first = true;
+    for(const raw of src.split(/\n/)){
+      const t = raw.trim();
+      if(!t) continue;
+      if(first){ first = false;
+        kids.push(new Paragraph({ spacing:{after:40},
+          children:[new TextRun({text:t, bold:true, size:34, font:"Calibri"})] })); continue; }
+      if(t.startsWith("@ ")){
+        kids.push(new Paragraph({ spacing:{after:20},
+          children:[new TextRun({text:t.slice(2), size:20, font:"Calibri"})] })); continue; }
+      if(t.startsWith("## ")){
+        kids.push(new Paragraph({ heading:HeadingLevel.HEADING_1, spacing:{before:260, after:90},
+          border:{bottom:{style:BorderStyle.SINGLE, size:6, color:"000000", space:2}},
+          children:[new TextRun({text:t.slice(3).toUpperCase(), bold:true, size:22, font:"Calibri", color:"000000"})] })); continue; }
+      if(t.startsWith("# ")){
+        kids.push(new Paragraph({ heading:HeadingLevel.HEADING_2, spacing:{before:170, after:40},
+          children:[new TextRun({text:t.slice(2), bold:true, size:21, font:"Calibri", color:"000000"})] })); continue; }
+      if(t.startsWith("- ")){
+        kids.push(new Paragraph({ numbering:{reference:"rbul", level:0}, spacing:{after:60},
+          children:[new TextRun({text:t.slice(2), size:21, font:"Calibri"})] })); continue; }
+      kids.push(new Paragraph({ spacing:{after:80},
+        children:[new TextRun({text:t, size:21, font:"Calibri"})] }));
+    }
+    const doc = new Document({
+      numbering:{ config:[{ reference:"rbul", levels:[{ level:0, format:LevelFormat.BULLET, text:"\u2022",
+        alignment:AlignmentType.START, style:{paragraph:{indent:{left:340, hanging:200}}} }] }] },
+      styles:{ default:{ document:{ run:{ font:"Calibri", size:21 } } } },
+      sections:[{ properties:{ page:{ margin:{top:1080,bottom:1080,left:1130,right:1130} } }, children:kids }]
+    });
+    return await Packer.toBlob(doc);
+  }
+}
+
+async function exportDocx(){
+  const p = profile();
+  const src = document.getElementById("finalDoc")?.value || "";
+  const item = S.queue.find(q=>String(q.id)===String(rTarget));
+  if(!src.trim()){ error="Build the document first."; render(); return; }
+  try{
+    const blob = await docxBlobFromMarkup(src);
+    downloadBlob(blob, safeName(p, item, "docx"), "");
+    flash = "Downloaded as .docx"; error=""; render();
+    setTimeout(()=>{flash=""; render();}, 2500);
+  }catch(e){ console.error(e); exportDoc(true); }
+}
+
+function exportDoc(fallback){
+  const p = profile();
+  const src = document.getElementById("finalDoc")?.value || "";
+  const item = S.queue.find(q=>String(q.id)===String(rTarget));
+  if(!src.trim()){ error="Build the document first."; render(); return; }
+  downloadBlob(resumeWordHtml(src, p.name), safeName(p, item, "doc"), "application/msword");
+  flash = fallback ? "Downloaded as .doc — open in Word and Save As .docx" : "Downloaded as .doc";
+  error=""; render();
+  setTimeout(()=>{flash=""; render();}, 3000);
+}
+
+function exportTxt(){
+  const p = profile();
+  const src = document.getElementById("finalDoc")?.value || "";
+  const item = S.queue.find(q=>String(q.id)===String(rTarget));
+  if(!src.trim()){ error="Build the document first."; render(); return; }
+  downloadBlob(resumePlain(src), safeName(p, item, "txt"), "text/plain;charset=utf-8");
+  flash = "Downloaded as .txt"; error=""; render();
+  setTimeout(()=>{flash=""; render();}, 2500);
+}
+
+let finalDoc = "";
+function buildDoc(){
+  const item = S.queue.find(q=>String(q.id)===String(rTarget));
+  finalDoc = assembleResume(profile(), rPrep);
+  error=""; render();
+}
+
+/* ==========================================================
+   interview tab
+   ========================================================== */
+let ivIdx = 0, ivShow = false, ivFilter = "all", ivAudience = "auto";
+
+const AUDIENCES = {
+  auto: ["Work it out from the posting",
+    "Read the posting and decide who is likely to interview. Say which you concluded and why in the first audience note.",
+    "The prep will read the posting and decide for you, then tell you which it concluded and why. Fine when you genuinely do not know — but naming the audience yourself produces sharper questions."],
+  ph: ["Philippine employer or HR panel",
+    `A Philippine employer or HR panel. Expect a more formal, hierarchical conversation, often a panel with HR present alongside a technical lead. They will ask directly about expected salary, notice period, reason for leaving, willingness to work shifts or overtime, and reliability. Questions about tenure and loyalty are common. Some interviewers still ask personal questions about family or living arrangements; note where the candidate may politely redirect. Credentials and length of service carry weight. Answers should be respectful and specific, and the candidate should be ready to give a salary number when asked rather than deflecting.`,
+    "More formal, often a panel with HR sitting alongside a technical lead. Expect direct questions about expected salary, notice period, reason for leaving and willingness to work shifts. Have a real number ready when pay comes up — deflecting reads badly here. Tenure and credentials carry weight. Some interviewers still ask about family or living arrangements; the prep will flag where you can politely redirect."],
+  us: ["US or EU client-facing panel",
+    `A US or European hiring manager, or a client-side panel. Expect competency-based interviewing: most questions will open with "tell me about a time when" and expect a situation, action and result. They probe for ownership and independent judgement rather than following process. They will ask what the candidate would do in the first ninety days. They will not ask about age, family or civil status and the candidate should not volunteer any of it. Salary is often deferred to a recruiter; if asked, a range with reasoning lands better than a single figure. Expect video call, and expect them to test whether the candidate can disagree with a client politely.`,
+    "Competency-based. Most questions open with \u201ctell me about a time when\u201d and expect a situation, an action and a result. They are testing independent judgement, not whether you followed a process. Expect to be asked what you would do in your first ninety days. They will not ask about age, family or civil status — do not volunteer any of it. On pay, a range with reasoning lands better than a single figure."],
+  both: ["Both — local HR screen, then client interview",
+    `Two stages, which is standard for an MSP or a Global Capability Centre. Stage one is a Philippine HR or delivery-lead screen: salary expectation, notice period, shift willingness, reason for leaving, basic technical grounding. Stage two is a US or European client panel: competency-based, "tell me about a time when", ownership, judgement, and whether the candidate can hold a conversation with their stakeholders. Tag each question with which stage it belongs to at the start of the "why" field, as "Stage 1:" or "Stage 2:". The same candidate needs different emphasis in each.`,
+    "The standard MSP and Global Capability Centre pattern. Stage one is a local HR or delivery-lead screen covering pay, notice period, shift and basic grounding. Stage two is the client panel, testing ownership and whether you can hold a conversation with their stakeholders. Each question comes back tagged Stage 1 or Stage 2 so you know which conversation it belongs to."]
+};
+
+function buildInterviewPrompt(item){
+  const p = profile();
+  return `You are preparing a specific candidate for a specific job interview. Two rules override everything else.
+
+RULE 1 — NEVER fake expertise. Where the candidate lacks a skill the posting asks for, do not write an answer that
+pretends otherwise. Write an honest answer that names the gap in one clause, bridges immediately to real adjacent
+experience, and shows how they would get up to speed. Interviewers respect this and catch the alternative.
+
+RULE 2 — Write answers to be SPOKEN, not read. Short sentences. Contractions. The way a competent person actually
+talks. No corporate vocabulary: never "leverage", "utilise", "synergy", "spearheaded", "passionate about".
+Each answer must be sayable in under 45 seconds — roughly 90 words maximum.
+
+CANDIDATE
+Name: ${p.name}
+Current title: ${p.title}
+Years: ${p.years}
+Skills: ${p.skills}
+Results they can cite: ${p.wins || "none supplied — build answers only from the resume below"}
+Location: Philippines. Work setup: ${p.setup || "remote"}
+
+THEIR RESUME
+"""
+${(p.resume||"no resume on file").slice(0,5000)}
+"""
+
+WHO IS INTERVIEWING
+${AUDIENCES[ivAudience][1]}
+Shape the questions, the wording and the emphasis around this. A Philippine HR panel and a US client panel
+ask different things and reward different answers, even for the same role.
+
+THE JOB
+Company: ${item.company}
+Role: ${item.role}
+${item.jd ? 'Posting:\n"""\n' + item.jd.slice(0,5000) + '\n"""' : "Posting text not stored. Work from the role title."}
+
+Return ONLY a JSON object. No markdown, no backticks, no preamble.
+{
+ "what_they_want": ["<4 to 5 items. Decode what this employer is ACTUALLY hiring for, beneath the job description's wording. Each item: the real underlying need -> the evidence in the posting that reveals it. Include what kind of person fails in this role.>"],
+ "opening": "<their answer to 'tell me about yourself'. Spoken, 60 to 80 words, ending by connecting to this specific role. This is the single most rehearsed answer they will give.>",
+ "opening_hook": "<3 to 5 words that let them recall the shape of that opening answer under pressure>",
+ "questions": [
+   {
+    "q": "<the question, as an interviewer would actually phrase it>",
+    "type": "<technical|behavioral|gap|logistics|closing>",
+    "hook": "<3 to 5 word memory anchor. This is what they memorise, not the answer.>",
+    "answer": "<the spoken answer. Under 90 words. Plain, warm, specific. Uses real details from their resume.>",
+    "why": "<one sentence: what the interviewer is really testing with this question>"
+   }
+ ],
+ "audience_notes": ["<3 to 4 items on how THIS interviewer type differs from the other, and what the candidate should adjust. Include anything they should be ready to decline politely.>"],
+ "salary_script": "<what to say when asked about salary expectations, given they need to take home at least ${peso(floorNet())} per month, which is roughly ${peso(grossFloor())} gross. Spoken. Include what to say if pressed for a number first.>",
+ "ask_them": ["<4 questions for the candidate to ask, ordered strongest first, each followed by ' -> ' and what a good or bad answer would tell them>"],
+ "closing": "<what to say in the last 30 seconds of the interview to leave a mark. Spoken, under 60 words.>",
+ "night_before": ["<max 5 concrete things to do the evening before this interview>"]
+}
+
+Produce 10 to 14 questions. Weight them toward what THIS posting emphasises. Always include at least two of type
+"gap" if the posting names anything the resume does not support, at least three "behavioral", and one "logistics"
+covering availability, notice period or shift if the posting mentions any.`;
+}
+
+function ivPrep(item){ return item && item.interviews ? item.interviews[ivAudience] : null; }
+function ivBuiltCount(item){ return item && item.interviews ? Object.keys(item.interviews).length : 0; }
+
+function showInterview(){
+  const el = document.getElementById("ivreply");
+  if(!el || !el.value.trim()){ error="Paste Claude's reply into the box first."; render(); return; }
+  const item = S.queue.find(q=>String(q.id)===String(ivTarget));
+  try{
+    const t = el.value.replace(/```json/g,"").replace(/```/g,"").trim();
+    const parsed = JSON.parse(t.slice(t.indexOf("{"), t.lastIndexOf("}")+1));
+    parsed._audience = ivAudience;
+    parsed._built = new Date().toISOString().slice(0,10);
+    if(item){ item.interviews = item.interviews || {}; item.interviews[ivAudience] = parsed; save(); }
+    ivIdx = 0; ivShow = false; error="";
+  }catch{ error="That didn't parse. Copy the whole reply, including the opening and closing braces."; }
+  render();
+}
+
+const TYPE_LABEL = { technical:"Technical", behavioral:"Behavioural", gap:"Gap — answer honestly",
+                     logistics:"Logistics", closing:"Closing" };
+const TYPE_COLOUR = { technical:"accent", behavioral:"b2", gap:"b3", logistics:"soft", closing:"b1" };
+
+let ivTarget = "";
+
+/* ---------- interview export ---------- */
+function interviewMarkup(item){
+  const iv = ivPrep(item) || {};
+  const p = profile();
+  const L = [];
+  L.push("Interview preparation");
+  L.push("@ " + (p.name||""));
+  L.push("@ " + item.company + (item.role ? " — " + item.role : ""));
+  const builtWith = iv._audience && AUDIENCES[iv._audience] ? AUDIENCES[iv._audience][0] : "not recorded";
+  L.push("@ Prepared for: " + builtWith);
+  if(iv._built) L.push("@ Built: " + iv._built);
+  L.push("");
+  if((iv.what_they_want||[]).length){
+    L.push("## WHAT THEY ARE ACTUALLY HIRING FOR");
+    iv.what_they_want.forEach(x=>L.push("- " + x));
+    L.push("");
+  }
+  if((iv.audience_notes||[]).length){
+    L.push("## WHO YOU ARE TALKING TO");
+    iv.audience_notes.forEach(x=>L.push("- " + x));
+    L.push("");
+  }
+  if(iv.opening){
+    L.push("## YOUR OPENING");
+    if(iv.opening_hook) L.push("Anchor: " + iv.opening_hook);
+    L.push(iv.opening);
+    L.push("");
+  }
+  if((iv.questions||[]).length){
+    L.push("## QUESTIONS AND ANSWERS");
+    iv.questions.forEach((q,i)=>{
+      L.push("# " + (i+1) + ". " + q.q);
+      L.push("Type: " + (TYPE_LABEL[q.type]||q.type) + (q.hook ? "   ·   Anchor: " + q.hook : ""));
+      L.push(q.answer||"");
+      if(q.why) L.push("They are testing: " + q.why);
+      L.push("");
+    });
+  }
+  if(iv.salary_script){ L.push("## WHEN THEY ASK ABOUT SALARY"); L.push(iv.salary_script); L.push(""); }
+  if((iv.ask_them||[]).length){
+    L.push("## ASK THEM THIS");
+    iv.ask_them.forEach(x=>L.push("- " + x));
+    L.push("");
+  }
+  if(iv.closing){ L.push("## YOUR CLOSING 30 SECONDS"); L.push(iv.closing); L.push(""); }
+  if((iv.night_before||[]).length){
+    L.push("## THE EVENING BEFORE");
+    iv.night_before.forEach(x=>L.push("- " + x));
+  }
+  return L.join("\n").replace(/\n{3,}/g,"\n\n").trim();
+}
+
+function csvCell(v){
+  const t = String(v==null?"":v).replace(/"/g,'""');
+  return '"' + t + '"';
+}
+
+function interviewCsv(item){
+  const iv = ivPrep(item) || {};
+  const rows = [["#","Type","Question","Memory anchor","Answer","What they are testing","Practised"]];
+  (iv.questions||[]).forEach((q,i)=>{
+    rows.push([i+1, TYPE_LABEL[q.type]||q.type, q.q, q.hook||"", q.answer||"", q.why||"", ""]);
+  });
+  rows.push([]);
+  if(iv.opening) rows.push(["","Opening","Tell me about yourself", iv.opening_hook||"", iv.opening, "Most rehearsed answer you will give", ""]);
+  if(iv.salary_script) rows.push(["","Salary","What are your salary expectations?","", iv.salary_script, "Whether you know your worth", ""]);
+  (iv.ask_them||[]).forEach(x=>rows.push(["","Ask them", x, "", "", "", ""]));
+  if(iv.closing) rows.push(["","Closing","Last 30 seconds","", iv.closing, "", ""]);
+  // BOM so Excel opens UTF-8 correctly
+  return "\ufeff" + rows.map(r=>r.map(csvCell).join(",")).join("\r\n");
+}
+
+const AUD_TAG = { auto:"Auto", ph:"PH_panel", us:"US_panel", both:"Both_stages" };
+function ivFileName(item, ext){
+  const who = (profile().name||"Interview").replace(/[^A-Za-z0-9]+/g,"_").replace(/^_|_$/g,"");
+  const co  = (item.company||"").replace(/[^A-Za-z0-9]+/g,"_").replace(/^_|_$/g,"");
+  const tag = AUD_TAG[(ivPrep(item)||{})._audience] || AUD_TAG[ivAudience] || "Prep";
+  return who + "_" + co + "_Interview_" + tag + "." + ext;
+}
+
+async function exportInterview(fmt){
+  const item = S.queue.find(q=>String(q.id)===String(ivTarget));
+  if(!item || !ivPrep(item)){ error="Build the prep first."; render(); return; }
+  const src = interviewMarkup(item);
+  try{
+    if(fmt==="docx"){
+      const blob = await docxBlobFromMarkup(src);
+      downloadBlob(blob, ivFileName(item,"docx"), "");
+      flash = "Downloaded as .docx";
+    } else if(fmt==="csv"){
+      downloadBlob(interviewCsv(item), ivFileName(item,"csv"), "text/csv;charset=utf-8");
+      flash = "Downloaded — open it in Excel";
+    } else if(fmt==="txt"){
+      downloadBlob(resumePlain(src), ivFileName(item,"txt"), "text/plain;charset=utf-8");
+      flash = "Downloaded as .txt";
+    } else {
+      downloadBlob(resumeWordHtml(src, profile().name), ivFileName(item,"doc"), "application/msword");
+      flash = "Downloaded as .doc — open in Word";
+    }
+    error="";
+  }catch(e){
+    console.error(e);
+    downloadBlob(resumeWordHtml(src, profile().name), ivFileName(item,"doc"), "application/msword");
+    flash = "Downloaded as .doc — open in Word and Save As .docx";
+  }
+  render();
+  setTimeout(()=>{flash=""; render();}, 3000);
+}
+
+function viewInterview(){
+  const item = S.queue.find(q=>String(q.id)===String(ivTarget));
+  const iv = ivPrep(item);
+  const built = item ? Object.keys(item.interviews||{}) : [];
+  const all = iv?.questions || [];
+  const qs = ivFilter==="all" ? all : all.filter(q=>q.type===ivFilter);
+  const cur = qs[Math.min(ivIdx, Math.max(0,qs.length-1))];
+  const counts = {};
+  all.forEach(q=>counts[q.type]=(counts[q.type]||0)+1);
+
+  return `
+    <h3 class="sub">Interview preparation</h3>
+    <p class="note" style="margin-top:0;margin-bottom:20px">What the employer is really hiring for, the questions
+    they are likely to ask, and an answer for each written to be said out loud rather than read.</p>
+
+    ${S.queue.length===0?`<div class="empty">Nothing in your queue yet.<br>Assess a posting on the Scan tab first.</div>`:`
+    <div class="row c2">
+      <div><label class="l">Interviewing for</label>
+        <select onchange="ivTarget=this.value;ivIdx=0;ivShow=false;render()">
+          <option value="">Choose a queued job…</option>
+          ${S.queue.map(q=>`<option value="${q.id}" ${String(q.id)===String(ivTarget)?"selected":""}>${esc(q.company)} — ${esc(q.role)}</option>`).join("")}
+        </select></div>
+      <div><label class="l">Who will be interviewing</label>
+        <select onchange="ivAudience=this.value;render()">
+          ${Object.entries(AUDIENCES).map(([k,v])=>`<option value="${k}" ${ivAudience===k?"selected":""}>${esc(v[0])}</option>`).join("")}
+        </select>
+        <p class="foot" style="margin-top:6px">Choose before you copy the prompt. It reshapes every question
+        that comes back.</p>
+      </div>
+    </div>
+
+    <div class="info"><strong>${esc(AUDIENCES[ivAudience][0])}.</strong> ${esc(AUDIENCES[ivAudience][2]||"")}</div>
+
+    ${item && built.length ? `<p class="note" style="margin:-8px 0 18px">
+      Prepared so far for this job: ${built.map(b=>`<span class="pill" style="font-size:10px;color:var(--${b===ivAudience?"b1":"soft"});background:var(--${b===ivAudience?"b1":"soft"}-bg)">${esc(AUDIENCES[b]?.[0]||b)}</span>`).join(" ")}
+      Each is stored and exported separately — switching the dropdown switches between them.
+    </p>` : ""}
+
+    <details style="margin:0 0 20px">
+      <summary class="sumlink">Compare all three side by side</summary>
+      <div style="margin-top:14px">
+        ${Object.entries(AUDIENCES).filter(([kk])=>kk!=="auto").map(([kk,v])=>`
+          <div class="audrow ${ivAudience===kk?"on":""}">
+            <div class="audname">${esc(v[0])}</div>
+            <div class="audtext">${esc(v[2]||"")}</div>
+          </div>`).join("")}
+        <p class="foot">The same role can involve either conversation, or both. If the employer is a
+        Philippine company hiring for its own team, it is the first. If they are an MSP or a Global
+        Capability Centre delivering to a US or European client, assume both.</p>
+      </div>
+    </details>
+
+    ${!item?"":`
+      ${!iv?`
+      ${built.length?`<div class="info">No prep yet for <strong>${esc(AUDIENCES[ivAudience][0])}</strong>.
+      You already have ${built.length===1?"one":built.length} built for this job under the other options —
+      switch the dropdown to see ${built.length===1?"it":"them"}, or build this one below.</div>`:""}
+      <div class="steps">
+        <div class="stepi"><span class="stepn">1</span><span>Click <strong>Copy prep prompt</strong>.</span></div>
+        <div class="stepi"><span class="stepn">2</span><span>Paste it into a chat at claude.ai and send.</span></div>
+        <div class="stepi"><span class="stepn">3</span><span>Paste the whole reply below and click <strong>Build prep</strong>.</span></div>
+      </div>
+      <div class="actions" style="margin-top:0">
+        <button class="btn" onclick='copy(buildInterviewPrompt(S.queue.find(q=>String(q.id)==="${item.id}")),"Prompt copied")'>Copy prep prompt</button>
+        <a class="mini" href="https://claude.ai/new" target="_blank" rel="noopener">Open claude.ai</a>
+        ${flash?`<span class="flash">${esc(flash)}</span>`:""}
+      </div>
+      <div class="row" style="margin-top:18px"><div>
+        <label class="l" for="ivreply">Claude's reply</label>
+        <textarea id="ivreply" rows="4" placeholder="Paste the whole reply here, starting with { and ending with }"></textarea>
+      </div></div>
+      <div class="actions" style="margin-top:0"><button class="btn" onclick="showInterview()">Build prep</button></div>
+      ${error?`<div class="err">${esc(error)}</div>`:""}
+      `:`
+      <div class="sec"><div class="sech">What they are actually hiring for</div>
+        ${(iv.what_they_want||[]).map(x=>`<div class="item"><span class="tick" style="background:var(--accent)"></span><span>${esc(x)}</span></div>`).join("")}
+      </div>
+
+      ${(iv.audience_notes||[]).length?`<div class="sec"><div class="sech">Who you are talking to</div>
+        ${iv.audience_notes.map(x=>`<div class="item"><span class="tick" style="background:var(--b2)"></span><span>${esc(x)}</span></div>`).join("")}
+      </div>`:""}
+
+      <div class="sec"><div class="sech">Your opening — "tell me about yourself"</div>
+        ${iv.opening_hook?`<p class="hook">Remember: ${esc(iv.opening_hook)}</p>`:""}
+        <div class="pitch">${esc(iv.opening)}</div>
+        <div class="actions"><button class="btn ghost" onclick='copy(${JSON.stringify(iv.opening||"")},"Opening copied")'>Copy</button></div>
+      </div>
+
+      <div class="sec"><div class="sech">Practice — ${all.length} questions${iv._audience?` · prepared for ${esc((AUDIENCES[iv._audience]?.[0]||"").toLowerCase())}`:""}</div>
+        <div class="chips">
+          ${["all","technical","behavioral","gap","logistics","closing"].filter(t=>t==="all"||counts[t])
+            .map(t=>`<button class="fchip ${ivFilter===t?"on":""}" onclick="ivFilter='${t}';ivIdx=0;ivShow=false;render()">${t==="all"?"All":TYPE_LABEL[t]||t}${t==="all"?"":" ("+counts[t]+")"}</button>`).join("")}
+        </div>
+
+        ${!cur?`<p class="note">No questions of that type.</p>`:`
+        <div class="qcard">
+          <div class="qmeta">
+            <span class="pill" style="color:var(--${TYPE_COLOUR[cur.type]||"soft"});background:var(--${(TYPE_COLOUR[cur.type]||"b2")}-bg)">${esc(TYPE_LABEL[cur.type]||cur.type)}</span>
+            <span class="qnum">${Math.min(ivIdx+1,qs.length)} of ${qs.length}</span>
+          </div>
+          <p class="qtext">${esc(cur.q)}</p>
+          ${cur.hook?`<p class="hook">Anchor: ${esc(cur.hook)}</p>`:""}
+          ${ivShow?`
+            <div class="pitch" style="margin-top:14px">${esc(cur.answer)}</div>
+            ${cur.why?`<p class="note" style="margin-top:10px"><strong>They are testing:</strong> ${esc(cur.why)}</p>`:""}
+          `:`<p class="note" style="margin-top:14px;font-style:italic">Say your answer out loud first, then reveal.</p>`}
+          <div class="actions">
+            <button class="btn" onclick="ivShow=!ivShow;render()">${ivShow?"Hide answer":"Reveal answer"}</button>
+            <button class="btn ghost" onclick="ivIdx=Math.max(0,ivIdx-1);ivShow=false;render()" ${ivIdx===0?"disabled":""}>Back</button>
+            <button class="btn ghost" onclick="ivIdx=Math.min(${qs.length-1},ivIdx+1);ivShow=false;render()" ${ivIdx>=qs.length-1?"disabled":""}>Next</button>
+          </div>
+        </div>`}
+
+        <details style="margin-top:18px"><summary class="sumlink">Show all ${qs.length} questions and answers as a list</summary>
+          <div style="margin-top:14px">
+          ${qs.map((q,i)=>`<div class="qlist">
+            <p class="qtext" style="font-size:15px">${i+1}. ${esc(q.q)}</p>
+            ${q.hook?`<p class="hook">Anchor: ${esc(q.hook)}</p>`:""}
+            <div class="letter" style="margin-top:8px">${esc(q.answer)}</div>
+          </div>`).join("")}
+          </div>
+        </details>
+      </div>
+
+      ${iv.salary_script?`<div class="sec"><div class="sech">When they ask about salary</div>
+        <div class="pitch">${esc(iv.salary_script)}</div>
+        <div class="actions"><button class="btn ghost" onclick='copy(${JSON.stringify(iv.salary_script||"")},"Copied")'>Copy</button></div>
+      </div>`:""}
+
+      ${(iv.ask_them||[]).length?`<div class="sec"><div class="sech">Ask them this</div>
+        ${iv.ask_them.map(x=>`<div class="item"><span class="tick" style="background:var(--accent)"></span><span>${esc(x)}</span></div>`).join("")}
+      </div>`:""}
+
+      ${iv.closing?`<div class="sec"><div class="sech">Your closing 30 seconds</div>
+        <div class="pitch">${esc(iv.closing)}</div></div>`:""}
+
+      ${(iv.night_before||[]).length?`<div class="sec"><div class="sech">The evening before</div>
+        ${iv.night_before.map(x=>`<div class="item"><span class="tick" style="background:var(--b1)"></span><span>${esc(x)}</span></div>`).join("")}
+      </div>`:""}
+
+      <div class="sec"><div class="sech">Save this prep</div>
+        <p class="note" style="margin-top:0;margin-bottom:12px">The prep already saves inside the app and stays
+        on this job. Export it if you want to print it, read it on your phone, or tick questions off as you
+        rehearse.</p>
+        <div class="actions" style="margin-top:0">
+          <button class="btn" onclick="exportInterview('docx')">Download Word</button>
+          <button class="btn ghost" onclick="exportInterview('csv')">Download for Excel</button>
+          <button class="btn ghost" onclick="exportInterview('doc')">Word (.doc, offline)</button>
+          <button class="btn ghost" onclick='copy(resumePlain(interviewMarkup(S.queue.find(q=>String(q.id)==="${item.id}"))),"Copied")'>Copy plain text</button>
+          ${flash?`<span class="flash">${esc(flash)}</span>`:""}
+        </div>
+        <p class="foot">The Word file is laid out to read or print. The Excel file is one question per row with
+        Type, Question, Memory anchor, Answer and a blank Practised column you can tick as you rehearse.
+        Both contain <strong>every</strong> question in this prep — the practice filters above change only what
+        is on screen, never what is exported. The file covers the audience currently selected and is named
+        accordingly, so preparing for two audiences gives you two separate files.</p>
+      </div>
+
+      <div class="actions" style="margin-top:26px">
+        <button class="btn ghost" onclick="if(confirm('Discard the prep for this audience and start again? Preps for other audiences are kept.')){delete S.queue.find(q=>String(q.id)==='${item.id}').interviews['${ivAudience}'];save();render()}">Rebuild this one</button>
+      </div>
+      `}
+    `}
+    `}`;
+}
+
+/* ---------- resume tab ---------- */
+let rTarget = "", rPrep = null;
+
+function viewResume(){
+  const p = profile();
+  const a = auditResume(p.resume);
+  const item = S.queue.find(q=>String(q.id)===String(rTarget));
+  const terms = item ? jobTerms(item) : [];
+  const cov = item ? coverage(p.resume||"", terms) : [];
+  const hits = cov.filter(c=>c.hit).length;
+  const pct = cov.length ? Math.round(hits/cov.length*100) : 0;
+  const covColour = pct>=75?"b1":pct>=50?"b2":"b4";
+
+  return `
+    <h3 class="sub">Resume</h3>
+    <p class="note" style="margin-top:0;margin-bottom:20px">Paste your resume as plain text. It gets audited
+    for screening software, compared word by word against any job in your queue, and rewritten for the one
+    you're applying to.</p>
+
+    <div class="row"><div>
+      <label class="l">Master resume — ${esc(p.name)}</label>
+      <textarea rows="12" placeholder="Paste your whole resume here as plain text. Keep the section headings on their own lines: Summary, Experience, Skills, Certifications, Education."
+        oninput="setField('resume',this.value)">${esc(p.resume||"")}</textarea>
+      <p class="foot" style="margin-top:8px">Stored in this browser only. Leave out your home address and any
+      ID numbers — city and country is all a resume needs.</p>
+    </div></div>
+
+    ${!a?`<div class="info">Paste at least a few paragraphs and the audit will appear here automatically.</div>`:`
+    <div class="sec">
+      <div class="sech">ATS readiness — checked on this machine, no key needed</div>
+      <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;margin-bottom:16px">
+        <div><div class="big" style="color:var(--${a.score>=80?"b1":a.score>=60?"b2":"b4"})">${a.score}</div>
+          <div class="figl">out of 100</div></div>
+        <div style="flex:1;min-width:220px">
+          <div class="meter"><span style="width:${a.score}%;background:var(--${a.score>=80?"b1":a.score>=60?"b2":"b4"})"></span></div>
+          <p class="note" style="margin:6px 0 0">${a.st.words} words · ${a.st.bullets} bullets · ${a.qPct}% carry a number</p>
+        </div>
+      </div>
+      ${a.items.map(i=>`<div class="audit">
+        <span class="abadge" style="color:var(--${i.level==="ok"?"b1":i.level==="warn"?"b2":"b4"});background:var(--${i.level==="ok"?"b1":i.level==="warn"?"b2":"b4"}-bg)">${i.level==="ok"?"PASS":i.level==="warn"?"MINOR":"FIX"}</span>
+        <span><strong>${esc(i.title)}.</strong> ${esc(i.detail)}</span></div>`).join("")}
+    </div>`}
+
+    <div class="sec">
+      <div class="sech">Compare against a job in your queue</div>
+      ${S.queue.length===0?`<p class="note">Nothing in your queue yet. Assess a posting on the Scan tab first —
+      the comparison uses the keywords it extracts.</p>`:`
+      <div class="row c2">
+        <div><label class="l">Target role</label>
+          <select onchange="rTarget=this.value;rPrep=null;render()">
+            <option value="">Choose a queued job…</option>
+            ${S.queue.map(q=>`<option value="${q.id}" ${String(q.id)===String(rTarget)?"selected":""}>${esc(q.company)} — ${esc(q.role)}</option>`).join("")}
+          </select></div>
+        <div><label class="l">Extra keywords to check (optional)</label>
+          <input id="extraKw" placeholder="comma separated" oninput="render()"></div>
+      </div>
+
+      ${item && !item.jd?`<div class="info" style="margin-top:14px"><strong>No job description saved on this
+      entry.</strong> The tailoring will be thinner than it should be. Re-assess this posting on the Scan tab
+      with the description pasted in, then add it to the queue again.</div>`:""}
+      ${!item?"":`
+        ${terms.length===0?`<p class="note">That job has no stored keywords. Re-assess it on the Scan tab.</p>`:`
+        <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin:14px 0 6px">
+          <div><span class="big" style="font-size:26px;color:var(--${covColour})">${pct}%</span>
+            <span class="note"> keyword coverage — ${hits} of ${cov.length} present</span></div>
+        </div>
+        <div class="meter" style="margin-bottom:14px"><span style="width:${pct}%;background:var(--${covColour})"></span></div>
+        <div class="cov">
+          ${cov.map(c=>`<div class="covi ${c.hit?"hit":"miss"}">
+            <span class="covm" style="color:var(--${c.hit?"b1":"b4"})">${c.hit?"IN":"OUT"}</span>
+            <span>${esc(c.term)}${c.hit?"":" — not in your resume"}</span></div>`).join("")}
+        </div>
+        <p class="foot">Screening software matches literal strings. Every OUT above is a term the posting
+        cares about that your resume does not contain. Add the ones you can honestly claim, in the posting's
+        exact wording.</p>
+
+        <div class="steps">
+          <div class="stepi"><span class="stepn">1</span><span>Click <strong>Copy tailoring prompt</strong>.</span></div>
+          <div class="stepi"><span class="stepn">2</span><span>Paste it into a chat at claude.ai and send.</span></div>
+          <div class="stepi"><span class="stepn">3</span><span>Paste the whole reply below and click <strong>Show plan</strong>.</span></div>
+        </div>
+        <div class="actions" style="margin-top:0">
+          <button class="btn" onclick='copy(buildResumePrompt(S.queue.find(q=>String(q.id)==="${item.id}")),"Prompt copied")'>Copy tailoring prompt</button>
+          <a class="mini" href="https://claude.ai/new" target="_blank" rel="noopener">Open claude.ai</a>
+          ${flash?`<span class="flash">${esc(flash)}</span>`:""}
+        </div>
+        <div class="row" style="margin-top:18px"><div>
+          <label class="l" for="rreply">Claude's reply</label>
+          <textarea id="rreply" rows="4" placeholder="Paste the whole reply here, starting with { and ending with }"></textarea>
+        </div></div>
+        <div class="actions" style="margin-top:0">
+          <button class="btn" onclick="showPrep()">Show plan</button>
+          <button class="btn ghost" onclick="rPrep=null;error='';render()">Clear</button>
+        </div>
+        ${error?`<div class="err">${esc(error)}</div>`:""}
+        ${rPrep?renderPrep(rPrep,item):""}`}`}`}
+    </div>`;
+}
+
+function showPrep(){
+  const el = document.getElementById("rreply");
+  if(!el || !el.value.trim()){ error="Paste Claude's reply into the box first."; render(); return; }
+  try{
+    const t = el.value.replace(/```json/g,"").replace(/```/g,"").trim();
+    rPrep = JSON.parse(t.slice(t.indexOf("{"), t.lastIndexOf("}")+1));
+    error="";
+  }catch{ error="That didn't parse. Copy the whole reply, including the opening and closing braces."; }
+  render();
+}
+
+function renderPrep(r, item){
+  const blk = (title, arr, colour) => (arr&&arr.length)?`
+    <div class="sec"><div class="sech">${title}</div>
+    ${arr.map(i=>`<div class="item"><span class="tick" style="background:var(--${colour})"></span><span>${esc(i)}</span></div>`).join("")}
+    </div>`:"";
+  return `<div style="margin-top:30px;padding-top:26px;border-top:2px solid var(--line)">
+    <div class="caseid">TAILORED FOR ${esc(item.company.toUpperCase())}</div>
+
+    ${r.summary?`<div class="sec"><div class="sech">Rewritten summary</div>
+      <div class="letter">${esc(r.summary)}</div>
+      <div class="actions"><button class="btn ghost" onclick='copy(${JSON.stringify(r.summary||"")},"Summary copied")'>Copy</button></div></div>`:""}
+
+    ${(r.bullets||[]).length?`<div class="sec"><div class="sech">Rewritten bullets — strongest first</div>
+      <div class="bul">${esc(r.bullets.map(b=>"• "+b).join("\n"))}</div>
+      <div class="actions"><button class="btn ghost" onclick='copy(${JSON.stringify((r.bullets||[]).map(b=>"• "+b).join("\n"))},"Bullets copied")'>Copy bullets</button></div>
+      <p class="foot">Anything showing [X] needs a real figure from you. Do not send it with the brackets in.</p></div>`:""}
+
+    ${r.skills_line?`<div class="sec"><div class="sech">Skills line, reordered for this posting</div>
+      <div class="bul">${esc(r.skills_line)}</div>
+      <div class="actions"><button class="btn ghost" onclick='copy(${JSON.stringify(r.skills_line||"")},"Skills line copied")'>Copy</button></div></div>`:""}
+
+    ${blk("Do not claim these — say this instead", r.honest_gaps, "b4")}
+    ${blk("Formatting fixes for screening software", r.ats_fixes, "b3")}
+    ${blk("What to study, in priority order", r.study_plan, "accent")}
+    ${blk("Worth doing this week", r.quick_wins, "b1")}
+    ${blk("Likely technical questions, and your answer", r.technical_qs, "accent")}
+    ${blk("Likely behavioural questions, and your STAR angle", r.behavioral_qs, "b2")}
+    ${blk("Ask them this", r.ask_them, "accent")}
+
+    <div class="sec"><div class="sech">Build the document</div>
+      <p class="note" style="margin-top:0;margin-bottom:12px">Merges the rewritten summary, skills line and
+      bullets above with the experience, certifications and education from your master resume, laid out to
+      the formatting rules screening software actually parses.</p>
+      <div class="actions" style="margin-top:0">
+        <button class="btn" onclick="buildDoc()">${finalDoc?"Rebuild draft":"Build draft"}</button>
+        ${flash?`<span class="flash">${esc(flash)}</span>`:""}
+      </div>
+
+      ${!finalDoc?"":`
+      <div class="row" style="margin-top:18px"><div>
+        <label class="l" for="finalDoc">Final document — edit before you download</label>
+        <textarea id="finalDoc" rows="16" oninput="finalDoc=this.value">${esc(finalDoc)}</textarea>
+        <p class="foot" style="margin-top:8px"><strong>Markup:</strong> first line is your name ·
+        <code>@</code> starts a contact line · <code>##</code> a section heading ·
+        <code>#</code> a job title line · <code>-</code> a bullet. Everything else is a plain paragraph.
+        Replace every <code>[X]</code> with a real figure before downloading.</p>
+      </div></div>
+      <div class="actions" style="margin-top:0">
+        <button class="btn" onclick="exportDocx()">Download .docx</button>
+        <button class="btn ghost" onclick="exportDoc(false)">Download .doc</button>
+        <button class="btn ghost" onclick="exportTxt()">Download .txt</button>
+        <button class="btn ghost" onclick='copy(resumePlain(document.getElementById("finalDoc").value),"Plain text copied")'>Copy plain text</button>
+      </div>
+      <div class="info" style="margin-top:16px"><strong>Before you send it.</strong> Check the document
+      contains no photo, birthdate, age, civil status, religion, or full street address. All of those are
+      common on Philippine resumes and all of them are liabilities on a US or European application — many
+      recruiters there are instructed to discard a resume that shows them. City and country is enough.
+      Keep it to two pages.</div>
+      <div class="info" style="margin-top:12px"><strong>Which file to send.</strong> Use the .docx for
+      uploads — it is a real Word file with no tables, columns, headers or text boxes, which is what
+      breaks parsers. Use Copy plain text when a site gives you a box to paste into rather than a file to
+      upload. The .txt is a safe archive copy. Check every <code>[X]</code> is gone before you send anything.</div>`}
+    </div>
+  </div>`;
+}
+
+function viewSources(){
+  const groups = [...new Set(SOURCES.map(s=>s[0]))];
+  const q = encodeURIComponent(document.getElementById("q")?.value || "vulnerability management");
+  return `
+    <h3 class="sub">Search every board from one place</h3>
+    <p class="note" style="margin-top:0;margin-bottom:22px">Type a term, then open each board with the search
+    already filled in. All free, no key needed.</p>
+    <div class="row"><div><label class="l" for="q">Search term</label>
+      <input id="q" value="vulnerability management" oninput="render()"></div></div>
+    <div style="margin-bottom:8px">
+      <label class="l">Boolean string, for boards that accept one</label>
+      <div class="bul">${esc(profile().booleans || "Add a boolean string on the Profile tab.")}</div>
+      <div class="actions"><button class="btn ghost" onclick='copy(${JSON.stringify(profile().booleans)},"Boolean copied")'>Copy boolean</button>
+      ${flash?`<span class="flash">${esc(flash)}</span>`:""}</div>
+    </div>
+    ${groups.map(g=>`<div class="grouplbl">${g}</div>` + SOURCES.filter(s=>s[0]===g).map(([,n,t,f])=>`
+      <div class="src"><span class="srcn">${n}</span><span class="srct">${t}</span>
+      <span style="margin-left:auto"><a class="mini" href="${f(q)}" target="_blank" rel="noopener">Open</a></span></div>`).join("")).join("")}
+    <div class="info" style="margin-top:26px"><strong>Read the location line before you apply.</strong> On most
+    global boards, "remote" means remote within the United States or the EU. Filter for
+    <em>Worldwide</em>, <em>Anywhere</em> or <em>APAC</em>, and skip anything asking for US work authorization —
+    that route means relocating on a visa, not working from here.</div>
+    <p class="foot">Boards change their URL formats without notice. If a link lands on a homepage rather than
+    results, paste the boolean string into that site's own search box. Boards marked "paste" never accept a
+    URL query, so those always need the clipboard.</p>`;
+}
+
+/* ---------- follow-up message writer ---------- */
+const FOLLOWUPS = {
+  applied:  ["Note after applying", "You applied and want to land on their radar without being a nuisance."],
+  silence:  ["Nudge after a week of silence", "No reply since you applied. Add something rather than repeat yourself."],
+  thanks:   ["Thank you after an interview", "Send within 24 hours. Reference something specific they said."],
+  delay:    ["Check in after a delay", "They promised a decision and the date has passed."],
+  offer:    ["Ask about timeline while deciding", "You have interest elsewhere, or need a decision date."],
+  closed:   ["Graceful close after a rejection", "Rejected. Leave the door open — people move and reqs reopen."]
+};
+let fuStage = "silence", fuOut = "", fuTarget = "";
+
+function buildFollowupPrompt(item){
+  const p = profile();
+  const iv = item.interviews ? Object.values(item.interviews)[0] : null;
+  return `Write follow-up messages for a specific job application. These are short professional messages, not letters.
+
+CANDIDATE
+${p.name}, ${p.title}, ${p.years} years.
+Background: ${p.skills}
+${p.wins ? "Results they can reference: " + p.wins.slice(0,700) : ""}
+
+THE APPLICATION
+Company: ${item.company}
+Role: ${item.role}
+Status: ${item.status}
+Applied or last contact: ${item.added}${item.next ? " · follow-up was due " + item.next : ""}
+${item.jd ? "Posting extract: " + item.jd.slice(0,1200) : ""}
+${iv && iv.what_they_want ? "What this employer appears to care about: " + (iv.what_they_want||[]).slice(0,2).join(" | ") : ""}
+
+SITUATION
+${FOLLOWUPS[fuStage][0]} — ${FOLLOWUPS[fuStage][1]}
+
+RULES
+Under 120 words. No "just checking in", no "circling back", no "I wanted to reach out".
+Every message must ADD something — a relevant thought, a specific detail, a piece of evidence —
+rather than repeating that they applied. Warm and plain, the way a competent adult writes.
+Never sound anxious or apologetic. Do not beg.
+
+Return ONLY a JSON object. No markdown, no backticks, no preamble.
+{
+ "subject": "<email subject line, under 8 words. Empty string if this is a LinkedIn message.>",
+ "message": "<the message itself>",
+ "why": "<one sentence on what this message is doing tactically>",
+ "send_to": "<who should receive it, and how to find them if they have not given a name>",
+ "timing": "<when to send it, and what to do if there is still no reply>",
+ "variant": "<a shorter, blunter alternative in one or two sentences, for LinkedIn or SMS>"
+}`;
+}
+
+function showFollowup(){
+  const el = document.getElementById("fureply");
+  if(!el || !el.value.trim()){ error="Paste the reply into the box first."; render(); return; }
+  try{
+    const t = el.value.replace(/```json/g,"").replace(/```/g,"").trim();
+    fuOut = JSON.parse(t.slice(t.indexOf("{"), t.lastIndexOf("}")+1)); error="";
+  }catch{ error="That didn't parse. Copy the whole reply including the braces."; }
+  render();
+}
+
+function viewQueue(){
+  const sorted = [...S.queue].sort((a,b)=>b.score-a.score);
+  const live = S.queue.filter(i=>i.status!=="Rejected"&&i.status!=="Withdrawn").length;
+  const opts = ["To apply","Applied","Screening","Interviewing","Offer","Rejected","Withdrawn"];
+  const today = new Date().toISOString().slice(0,10);
+  return `
+    <h3 class="sub">Application queue</h3>
+    <p class="note" style="margin-top:0;margin-bottom:8px">${live} live, ${S.queue.length} total. Sorted by fit,
+    so your best application is always at the top.</p>
+    <div class="info">This is a decision list, not an auto-applier. Every row keeps its full assessment —
+    click a row to reopen the pitch, cover note, keywords and interview prep when you sit down to apply.</div>
+    ${S.queue.length===0?`<div class="empty">Nothing queued yet.<br>Assess a posting on the Scan tab and add it here.</div>`:`
+    <div style="overflow-x:auto"><table>
+      <thead><tr><th>Fit</th><th>Company</th><th>Role</th><th>Pay</th><th>Status</th><th>Follow up</th><th></th></tr></thead>
+      <tbody>${sorted.map(i=>{
+        const b=bandOf(i.score);
+        const ck=i.clears==="yes"?"b1":i.clears==="no"?"b4":"b2";
+        const overdue = i.next && i.next < today && i.status!=="Rejected" && i.status!=="Withdrawn";
+        return `<tr class="qrow" onclick="toggleRow(event,${i.id})">
+        <td class="score" style="color:var(--${b.key})">${i.score}</td>
+        <td><input value="${esc(i.company)}" onclick="event.stopPropagation()"
+          onchange="setField2(${i.id},'company',this.value)"
+          style="font-weight:500;padding:6px 8px;font-size:13px;min-width:130px"
+          placeholder="Company name"></td>
+        <td><input value="${esc(i.role)}" onclick="event.stopPropagation()"
+          onchange="setField2(${i.id},'role',this.value)"
+          style="padding:6px 8px;font-size:13px;color:var(--mid);min-width:150px"
+          placeholder="Role title"></td>
+        <td><span class="pill" style="font-size:10px;color:var(--${ck});background:var(--${ck}-bg)">${esc(i.clears||"unknown")}</span></td>
+        <td><select onclick="event.stopPropagation()" onchange="setStatus(${i.id},this.value)">
+          ${opts.map(o=>`<option ${o===i.status?"selected":""}>${o}</option>`).join("")}</select></td>
+        <td><input type="date" value="${esc(i.next||"")}" onclick="event.stopPropagation()"
+          onchange="setNext(${i.id},this.value)"
+          style="${overdue?"border-color:var(--b4);color:var(--b4);font-weight:600":""}"></td>
+        <td><button class="mini" onclick="event.stopPropagation();removeRow(${i.id})">Remove</button></td></tr>
+        ${openRow===i.id && i.assessment?`<tr><td colspan="7" class="detail"><div class="detailin">
+          ${renderAssessment(i.assessment,{compact:true})}</div></td></tr>`:""}
+        ${openRow===i.id && !i.assessment?`<tr><td colspan="7" class="detail"><div class="detailin">
+          <p class="note">This one was added before assessments were stored. Re-assess it on the Scan tab to
+          attach the full report.</p></div></td></tr>`:""}`;
+      }).join("")}</tbody>
+    </table></div>
+    <p class="foot">Set a follow-up date when you apply. A date in the past turns red — that's your cue to
+    chase it. Roughly a week after applying, and again a week after any interview.</p>
+
+    <div class="sec"><div class="sech">Write a follow-up message</div>
+      <p class="note" style="margin-top:0;margin-bottom:14px">Most applications die from silence rather than
+      rejection. A message that adds something is one of the cheapest things that changes an outcome.</p>
+      <div class="row c2">
+        <div><label class="l">Which application</label>
+          <select onchange="fuTarget=this.value;fuOut='';render()">
+            <option value="">Choose one…</option>
+            ${S.queue.map(q=>`<option value="${q.id}" ${String(q.id)===String(fuTarget)?"selected":""}>${esc(q.company)} — ${esc(q.status)}</option>`).join("")}
+          </select></div>
+        <div><label class="l">Which moment</label>
+          <select onchange="fuStage=this.value;fuOut='';render()">
+            ${Object.entries(FOLLOWUPS).map(([k,v])=>`<option value="${k}" ${fuStage===k?"selected":""}>${esc(v[0])}</option>`).join("")}
+          </select></div>
+      </div>
+      ${!S.queue.find(q=>String(q.id)===String(fuTarget))?"":`
+        <div class="actions" style="margin-top:0">
+          <button class="btn" onclick='copy(buildFollowupPrompt(S.queue.find(q=>String(q.id)==="${fuTarget}")),"Prompt copied")'>Copy prompt</button>
+          <a class="mini" href="https://claude.ai/new" target="_blank" rel="noopener">Open claude.ai</a>
+          ${flash?`<span class="flash">${esc(flash)}</span>`:""}
+        </div>
+        <div class="row" style="margin-top:16px"><div>
+          <label class="l" for="fureply">Claude's reply</label>
+          <textarea id="fureply" rows="3" placeholder="Paste the whole reply here"></textarea>
+        </div></div>
+        <div class="actions" style="margin-top:0">
+          <button class="btn" onclick="showFollowup()">Show message</button>
+          <button class="btn ghost" onclick="fuOut='';error='';render()">Clear</button>
+        </div>
+        ${error?`<div class="err">${esc(error)}</div>`:""}
+        ${!fuOut?"":`
+          <div style="margin-top:22px">
+            ${fuOut.subject?`<p class="note" style="margin:0 0 8px"><strong>Subject:</strong> ${esc(fuOut.subject)}</p>`:""}
+            <div class="letter">${esc(fuOut.message)}</div>
+            <div class="actions">
+              <button class="btn ghost" onclick='copy(${JSON.stringify((fuOut.subject?fuOut.subject+"\n\n":"")+(fuOut.message||""))},"Message copied")'>Copy message</button>
+            </div>
+            ${fuOut.variant?`<div class="sec" style="margin-top:20px"><div class="sech">Shorter version, for LinkedIn</div>
+              <div class="bul">${esc(fuOut.variant)}</div>
+              <div class="actions"><button class="btn ghost" onclick='copy(${JSON.stringify(fuOut.variant||"")},"Copied")'>Copy</button></div></div>`:""}
+            ${fuOut.send_to?`<div class="item" style="margin-top:14px"><span class="tick" style="background:var(--accent)"></span><span><strong>Send to:</strong> ${esc(fuOut.send_to)}</span></div>`:""}
+            ${fuOut.timing?`<div class="item"><span class="tick" style="background:var(--b2)"></span><span><strong>Timing:</strong> ${esc(fuOut.timing)}</span></div>`:""}
+            ${fuOut.why?`<p class="foot">${esc(fuOut.why)}</p>`:""}
+          </div>`}
+      `}
+    </div>`}`;
+}
+function toggleRow(e,id){ openRow = openRow===id?null:id; render(); }
+function setStatus(id,v){ const r=S.queue.find(x=>x.id===id); if(r){ r.status=v; save(); updateFloor(); } }
+function setField2(id,f,v){ const r=S.queue.find(x=>x.id===id); if(r){ r[f]=(v||"").trim(); save(); render(); } }
+function setNext(id,v){ const r=S.queue.find(x=>x.id===id); if(r){ r.next=v; save(); } }
+function removeRow(id){ S.queue = S.queue.filter(x=>x.id!==id); save(); render(); }
+
+function viewProfile(){
+  const p = profile();
+  return `
+    <h3 class="sub">Your background</h3>
+    <p class="note" style="margin-top:0;margin-bottom:22px">Every assessment is scored against what's here.
+    The more specific this is, the sharper the results. Switch operators to keep two job searches side by side.</p>
+    <div class="row c2">
+      <div><label class="l" for="who">Editing</label>
+        <select id="who" onchange="S.activeProfile=this.value;save();render()">
+          <option value="A" ${S.activeProfile==="A"?"selected":""}>${esc(S.profiles.A.name||"Operator A")}</option>
+          <option value="B" ${S.activeProfile==="B"?"selected":""}>${esc(S.profiles.B.name||"Operator B")}</option>
+        </select></div>
+      <div><label class="l">Name</label><input value="${esc(p.name)}" oninput="setField('name',this.value)"></div>
+    </div>
+    <div class="row c2">
+      <div><label class="l">Current title</label><input value="${esc(p.title)}" oninput="setField('title',this.value)"></div>
+      <div><label class="l">Years of experience</label><input value="${esc(p.years)}" oninput="setField('years',this.value)"></div>
+    </div>
+    <div class="row"><div><label class="l">Skills and tools</label>
+      <textarea rows="4" oninput="setField('skills',this.value)">${esc(p.skills)}</textarea></div></div>
+    <div class="row"><div>
+      <label class="l">Results with numbers in them</label>
+      <textarea rows="4" placeholder="One per line. For example: cut critical-vulnerability backlog from 4,200 to under 400 in two quarters across 11,000 endpoints." oninput="setField('wins',this.value)">${esc(p.wins||"")}</textarea>
+      <p class="foot" style="margin-top:8px">This is the highest-value field on the page. Assessments can only
+      write strong resume bullets and cover notes if they have real numbers to work from. Add three or four,
+      even rough ones.</p>
+    </div></div>
+    <div class="row"><div><label class="l">Boolean search string</label>
+      <textarea rows="3" oninput="setField('booleans',this.value)">${esc(p.booleans)}</textarea></div></div>
+    <div class="row"><div><label class="l">Work setup — what you will and won't accept</label>
+      <textarea rows="2" oninput="setField('setup',this.value)">${esc(p.setup||"")}</textarea>
+      <p class="foot" style="margin-top:8px">Say plainly where the line is. "Fully remote only" and "remote
+      preferred, Metro Manila hybrid acceptable for a strong-fit role" produce different verdicts on the
+      same posting.</p></div></div>
+    <div class="row"><div><label class="l">Constraints — location, target employers</label>
+      <textarea rows="3" oninput="setField('notes',this.value)">${esc(p.notes)}</textarea></div></div>
+
+    <div class="sech" style="margin-top:32px">What ${esc(p.name || "this person")} needs to earn</div>
+    <p class="note" style="margin-top:0;margin-bottom:14px">Set per person. A lead and an analyst have different
+    market rates, so a single shared figure would wrongly reject good roles for one of you.</p>
+    <div class="row c2">
+      <div><label class="l">Take-home needed per month</label>
+        <input type="number" value="${p.floorNet ?? 0}" oninput="setField('floorNet',Number(this.value)||0)"></div>
+      <div><label class="l">Apply line — lowest fit score worth an hour</label>
+        <input type="number" value="${p.applyThreshold ?? 65}" oninput="setField('applyThreshold',Number(this.value)||65)"></div>
+    </div>
+
+    <div class="sech" style="margin-top:28px">Shared assumptions</div>
+    <div class="row c2">
+      <div><label class="l">Gross-up multiplier</label>
+        <input type="number" step="0.01" value="${S.taxUplift}" oninput="setNum('taxUplift',this.value)"></div>
+      <div><label class="l">Pesos per US dollar</label>
+        <input type="number" value="${S.fx}" oninput="setNum('fx',this.value)"></div>
+    </div>
+    <p class="foot">The gross-up multiplier turns take-home into the gross figure to negotiate for. 1.26 is a
+    rough starting point for Philippine income tax plus SSS, PhilHealth and Pag-IBIG at this salary band. Run
+    your own number through a current PH tax calculator and change it here. This tool doesn't give tax or
+    financial advice.</p>`;
+}
+function setField(f,v){ S.profiles[S.activeProfile][f]=v; save(); updateFloor(); }
+function setNum(f,v){ S[f]=Number(v)||0; save(); updateFloor(); }
+
+function viewSettings(){
+  return `
+    <h3 class="sub">Settings</h3>
+    <div class="row c2" style="margin-top:20px"><div>
+      <label class="l" for="mode">How assessments are produced</label>
+      <select id="mode" onchange="S.mode=this.value;save();render()">
+        <option value="paste" ${S.mode==="paste"?"selected":""}>Paste into Claude chat — free</option>
+        <option value="api" ${S.mode==="api"?"selected":""}>Automatic — needs an API key and credit</option>
+      </select>
+    </div></div>
+    <p class="foot" style="margin-top:0">Free mode copies a prompt for you to paste into claude.ai and takes the
+    reply back. Two extra copy-pastes, no cost. Automatic mode does it in one click but each assessment costs
+    about a US cent. Everything else in this app is free either way.</p>
+
+    ${S.mode==="api"?`
+    <div class="row" style="margin-top:24px"><div>
+      <label class="l" for="ak">Anthropic API key</label>
+      <input id="ak" type="password" value="${esc(S.apiKey)}" placeholder="sk-ant-..." oninput="S.apiKey=this.value;save()">
+    </div></div>
+    <div class="row c2"><div>
+      <label class="l">Model</label>
+      <input value="${esc(S.model)}" oninput="S.model=this.value;save()">
+    </div></div>
+    <p class="foot">Create a key at console.anthropic.com and add a small amount of credit. The key is stored in
+    this browser on this machine and only travels to Anthropic when you run a scan. Anyone with access to this
+    computer can read it, so keep this file off shared machines.</p>`:""}
+
+    <div class="sech" style="margin-top:34px">Your data</div>
+    <p class="note">Profiles, income floor and queue all live in this browser's storage. Clearing your browsing
+    data erases them, so export a copy before anything drastic — that's also how you move everything to another
+    machine or share it.</p>
+    <div class="actions">
+      <button class="btn ghost" onclick='copy(JSON.stringify(S,null,2),"Copied to clipboard")'>Export to clipboard</button>
+      <button class="btn ghost" onclick="importData()">Import from clipboard</button>
+      <button class="btn ghost" onclick="wipe()">Reset everything</button>
+      ${flash?`<span class="flash">${esc(flash)}</span>`:""}
+    </div>`;
+}
+async function importData(){
+  try{
+    S = {...structuredClone(DEFAULTS), ...JSON.parse(await navigator.clipboard.readText())};
+    save(); flash="Imported"; render();
+  }catch{ error="There's nothing valid on the clipboard to import."; render(); }
+}
+function wipe(){
+  if(!confirm("This deletes your profiles, queue and settings from this browser. Continue?")) return;
+  localStorage.removeItem(KEY); S = structuredClone(DEFAULTS); render();
+}
+
+/* ---------- render ---------- */
+const TABS = [["profile","Profile"],["resume","Resume"],["sources","Job Sources"],["queue","Queue"],["scan","Scan"],["interview","Interview"],["settings","Settings"]];
+
+function updateFloor(){
+  const today = new Date().toISOString().slice(0,10);
+  const due = S.queue.filter(i=>i.next && i.next<=today && i.status!=="Rejected" && i.status!=="Withdrawn").length;
+  document.getElementById("floor").innerHTML = [
+    ["Take-home needed", peso(floorNet()), true],
+    ["Gross to ask for", peso(grossFloor()), false],
+    ["Or USD contract", "$"+usdFloor().toLocaleString()+"/mo", false],
+    ["In queue", S.queue.length, false],
+    ["Applications sent", S.queue.filter(i=>i.status!=="To apply").length, false],
+    ["Follow-ups due", due, false]
+  ].map(([l,v,k])=>`<div class="fig"><span class="figl">${l}</span>
+    <span class="figv${k?" key":""}">${v}</span></div>`).join("");
+  document.getElementById("opline").textContent = profile().name + "'s job search";
+}
+
+function render(){
+  document.getElementById("tabs").innerHTML = TABS.map(([k,l])=>
+    `<button class="tab" role="tab" aria-selected="${tab===k}" onclick="go('${k}')">${l}</button>`).join("");
+  updateFloor();
+  const views = {profile:viewProfile, resume:viewResume, sources:viewSources, queue:viewQueue, scan:viewScan, interview:viewInterview, settings:viewSettings};
+  document.getElementById("view").innerHTML = views[tab]();
+}
+function go(k){ tab=k; error=""; render(); }
+
+render();
+</script>
+</body>
+</html>
